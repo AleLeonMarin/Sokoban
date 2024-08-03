@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package cr.ac.una.tarea.util;
+package cr.ac.una.datos.util;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.value.ChangeListener;
