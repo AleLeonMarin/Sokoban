@@ -11,6 +11,13 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+
+import cr.ac.una.datos.util.AppContext;
+import cr.ac.una.datos.util.FlowController;
+import javafx.application.Application;
+import javafx.stage.Stage;
+import java.io.IOException;
+
 /**
  * JavaFX App
  */
@@ -22,22 +29,14 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("primary"), 640, 480);
-        stage.setScene(scene);
-        stage.show();
-    }
-
-    static void setRoot(String fxml) throws IOException {
-        scene.setRoot(loadFXML(fxml));
-    }
-
-    private static Parent loadFXML(String fxml) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
-        return fxmlLoader.load();
+        // Estado para manejar animaciones guardando en app context
+        AppContext.getInstance().set("StartAnimation", true);
+        FlowController.getInstance().InitializeFlow(stage, null);
+        FlowController.getInstance().goMain();
     }
 
     public static void main(String[] args) {
-        launch();
+        launch(args);
     }
 
 }
