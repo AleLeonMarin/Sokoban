@@ -31,6 +31,10 @@ public class FlowController {
     private static ResourceBundle idioma;
     private static HashMap<String, FXMLLoader> loaders = new HashMap<>();
 
+
+    private static final double DEFAULT_WIDTH = 1050;
+    private static final double DEFAULT_HEIGHT = 620;
+
     private FlowController() {
     }
 
@@ -60,6 +64,11 @@ public class FlowController {
         getInstance();
         this.mainStage = stage;
         this.idioma = idioma;
+
+        this.mainStage.setWidth(DEFAULT_WIDTH);
+        this.mainStage.setHeight(DEFAULT_HEIGHT);
+
+        this.mainStage.setResizable(false);
     }
 
     private FXMLLoader getLoader(String name) {

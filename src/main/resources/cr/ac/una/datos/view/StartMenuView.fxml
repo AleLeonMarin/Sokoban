@@ -1,11 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cr.ac.una.datos.controller.StartMenuController">
-    
-</AnchorPane>
+<BorderPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="603.0" prefWidth="1082.0" styleClass="main-background" stylesheets="@Styles.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cr.ac.una.datos.controller.StartMenuController">
+   <center>
+      <StackPane maxHeight="-Infinity" maxWidth="-Infinity" stylesheets="@Styles.css" BorderPane.alignment="CENTER">
+         <children>
+            <VBox alignment="CENTER" prefHeight="276.0" prefWidth="312.0" spacing="30.0">
+               <children>
+                  <MFXButton fx:id="btnPlay" onAction="#onActionBtnPlay" prefHeight="51.0" prefWidth="167.0" styleClass="image-button" text="." translateX="-24.0">
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </MFXButton>
+                  <MFXButton />
+                  <MFXButton />
+               </children>
+            </VBox>
+         </children></StackPane>
+   </center>
+   <top>
+      <ImageView fx:id="imgLogo" fitHeight="90.0" fitWidth="376.0" pickOnBounds="true" preserveRatio="true" translateX="-24.0" translateY="100.0" BorderPane.alignment="CENTER">
+         <image>
+            <Image url="@../resources/imgLogo.png" />
+         </image>
+      </ImageView>
+   </top>
+</BorderPane>
