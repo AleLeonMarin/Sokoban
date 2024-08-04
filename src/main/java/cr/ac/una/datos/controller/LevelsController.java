@@ -13,7 +13,7 @@ import javafx.fxml.Initializable;
  *
  * @author Kendall Fonseca
  */
-public class LevelsController implements Initializable {
+public class LevelsController extends Controller implements Initializable {
 
     /**
      * Initializes the controller class.
@@ -21,6 +21,11 @@ public class LevelsController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }    
+    }
+
+    @Override
+    public void initialize(){
+
+    }
     
 }

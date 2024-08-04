@@ -8,28 +8,31 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="603.0" prefWidth="1082.0" styleClass="main-background" stylesheets="@Styles.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cr.ac.una.datos.controller.StartMenuController">
+<BorderPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="592.0" prefWidth="1062.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cr.ac.una.datos.controller.StartMenuController">
    <center>
-      <StackPane maxHeight="-Infinity" maxWidth="-Infinity" stylesheets="@Styles.css" BorderPane.alignment="CENTER">
+      <StackPane prefHeight="150.0" prefWidth="200.0" styleClass="main-backgroundGame" stylesheets="@Styles.css" BorderPane.alignment="CENTER">
          <children>
-            <VBox alignment="CENTER" prefHeight="276.0" prefWidth="312.0" spacing="30.0">
+            <StackPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="688.0" prefWidth="1082.0" styleClass="main-background" stylesheets="@Styles.css">
                <children>
-                  <MFXButton fx:id="btnPlay" onAction="#onActionBtnPlay" prefHeight="51.0" prefWidth="167.0" styleClass="image-button" text="." translateX="-24.0">
-                     <VBox.margin>
-                        <Insets />
-                     </VBox.margin>
-                  </MFXButton>
-                  <MFXButton />
-                  <MFXButton />
+                  <VBox alignment="CENTER" spacing="30.0">
+                     <children>
+                        <ImageView fx:id="imgLogo" fitHeight="90.0" fitWidth="376.0" pickOnBounds="true" preserveRatio="true" translateY="-50.0">
+                           <image>
+                              <Image url="@../resources/imgLogo.png" />
+                           </image>
+                        </ImageView>
+                        <MFXButton fx:id="btnPlay" onAction="#onActionBtnPlay" prefHeight="51.0" prefWidth="167.0" styleClass="image-button" text=".">
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                        </MFXButton>
+                        <MFXButton />
+                        <MFXButton />
+                     </children>
+                  </VBox>
                </children>
-            </VBox>
-         </children></StackPane>
+            </StackPane>
+         </children>
+      </StackPane>
    </center>
-   <top>
-      <ImageView fx:id="imgLogo" fitHeight="90.0" fitWidth="376.0" pickOnBounds="true" preserveRatio="true" translateX="-24.0" translateY="100.0" BorderPane.alignment="CENTER">
-         <image>
-            <Image url="@../resources/imgLogo.png" />
-         </image>
-      </ImageView>
-   </top>
 </BorderPane>

@@ -8,6 +8,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import cr.ac.una.datos.util.AnimationManager;
+import cr.ac.una.datos.util.FlowController;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.BorderPane;
@@ -60,7 +61,7 @@ public class StartMenuController extends Controller implements Initializable{
 
     @FXML
     void onActionBtnPlay(ActionEvent event) {
-
+        FlowController.getInstance().goView("LevelsView");
     }
 
 
