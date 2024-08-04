@@ -22,6 +22,7 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import io.github.palexdev.materialfx.css.themes.MFXThemeManager;
 import io.github.palexdev.materialfx.css.themes.Themes;
+import javafx.scene.layout.StackPane;
 
 public class FlowController {
 
@@ -29,6 +30,10 @@ public class FlowController {
     private static Stage mainStage;
     private static ResourceBundle idioma;
     private static HashMap<String, FXMLLoader> loaders = new HashMap<>();
+
+
+    private static final double DEFAULT_WIDTH = 1050;
+    private static final double DEFAULT_HEIGHT = 620;
 
     private FlowController() {
     }
@@ -59,6 +64,11 @@ public class FlowController {
         getInstance();
         this.mainStage = stage;
         this.idioma = idioma;
+
+        this.mainStage.setWidth(DEFAULT_WIDTH);
+        this.mainStage.setHeight(DEFAULT_HEIGHT);
+
+        this.mainStage.setResizable(false);
     }
 
     private FXMLLoader getLoader(String name) {
@@ -81,10 +91,12 @@ public class FlowController {
         return loader;
     }
 
-    public void goMain(String viewName) {
+   public void goMain() {
         try {
             this.mainStage.setScene(
-                    new Scene(FXMLLoader.load(App.class.getResource("view/" + viewName + ".fxml"), this.idioma)));
+
+                    //anadi un seteo de resolucion de pantalla
+                    new Scene(FXMLLoader.load(App.class.getResource("/cr/ac/una/datos/view/StartMenuView.fxml"), this.idioma), 1240, 800));
             MFXThemeManager.addOn(this.mainStage.getScene(), Themes.DEFAULT, Themes.LEGACY);
             this.mainStage.show();
         } catch (IOException ex) {
@@ -111,22 +123,41 @@ public class FlowController {
             stage = this.mainStage;
             controller.setStage(stage);
         }
-        switch (location) {
-            case "Center":
-                VBox vBox = ((VBox) ((BorderPane) stage.getScene().getRoot()).getCenter());
-                vBox.getChildren().clear();
-                vBox.getChildren().add(loader.getRoot());
-                break;
-            case "Top":
-                break;
-            case "Bottom":
-                break;
-            case "Right":
-                break;
-            case "Left":
-                break;
-            default:
-                break;
+
+        Parent root = loader.getRoot();
+
+        // Verifica si el root de la escena es un BorderPane
+        if (stage.getScene().getRoot() instanceof BorderPane) {
+            BorderPane borderPane = (BorderPane) stage.getScene().getRoot(); // Aqui se declara y define borderPane
+
+            switch (location) {
+                case "Center":
+                    if (borderPane.getCenter() instanceof StackPane) {
+                        StackPane stackPane = (StackPane) borderPane.getCenter();
+                        stackPane.getChildren().clear();
+                        stackPane.getChildren().add(root);
+                    } else {
+                        System.out.println("Center of BorderPane is not a StackPane, it's a " + borderPane.getCenter().getClass().getName());
+                    }
+                    break;
+                case "Top":
+                    borderPane.setTop(root);
+                    break;
+                case "Bottom":
+                    borderPane.setBottom(root);
+                    break;
+                case "Right":
+                    borderPane.setRight(root);
+                    break;
+                case "Left":
+                    borderPane.setLeft(root);
+                    break;
+                default:
+                    System.out.println("Invalid location specified: " + location);
+                    break;
+            }
+        } else {
+            System.out.println("Root of the scene is not a BorderPane, it's a " + stage.getScene().getRoot().getClass().getName());
         }
     }
 
