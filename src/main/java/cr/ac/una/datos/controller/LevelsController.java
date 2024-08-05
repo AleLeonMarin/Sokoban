@@ -25,7 +25,6 @@ public class LevelsController extends Controller implements Initializable {
 
     @Override
     public void initialize(){
-
     }
     
 }

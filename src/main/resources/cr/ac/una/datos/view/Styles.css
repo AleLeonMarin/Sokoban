@@ -1,8 +1,10 @@
 /* Constants */
 
-{
-    -fx-backgroundGame-color: #333029;
+*{
+    -fx-background-color: #333029;
+    -fx-font-family: Pinewood;
 }
+
 
 .main-background {
     -fx-background-color: #f0f0f0;
@@ -32,6 +34,8 @@
     -fx-background-size: cover;
     -fx-background-position: center center;
 }
+
+
 
 
 
