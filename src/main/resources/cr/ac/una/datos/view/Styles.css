@@ -1,7 +1,12 @@
 /* Constants */
 
 *{
+<<<<<<< Updated upstream
     -fx-backgroundGame-color: #333029;
+=======
+    -fx-game-color: #333029;
+    -fx-font-family: Pinewood;
+>>>>>>> Stashed changes
 }
 
 
@@ -12,6 +17,15 @@
     -fx-background-size: cover;
     -fx-background-position: center center;
 }
+
+.levels-background {
+    -fx-background-color: #f0f0f0;
+    -fx-background-image: url("../resources/levelsView.jpg");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+    -fx-background-position: center center;
+}
+
 
 .image-button {
     -fx-background-image: url("../resources/btnPlay.png");
@@ -28,7 +42,7 @@
 }
 
 .main-backgroundGame {
-    -fx-background-color: -fx-backgroundGame-color;
+    -fx-background-color: -fx-game-color;
     -fx-background-repeat: no-repeat;
     -fx-background-size: cover;
     -fx-background-position: center center;
