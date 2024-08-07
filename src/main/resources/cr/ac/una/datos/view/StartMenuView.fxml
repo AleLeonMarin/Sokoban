@@ -10,7 +10,7 @@
 
 <BorderPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="592.0" prefWidth="1062.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cr.ac.una.datos.controller.StartMenuController">
    <center>
-      <StackPane prefHeight="150.0" prefWidth="200.0" styleClass="main-backgroundGame" stylesheets="@Styles.css" BorderPane.alignment="CENTER">
+      <StackPane prefHeight="150.0" prefWidth="200.0" stylesheets="@Styles.css" BorderPane.alignment="CENTER">
          <children>
             <StackPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="688.0" prefWidth="1082.0" styleClass="main-background" stylesheets="@Styles.css">
                <children>

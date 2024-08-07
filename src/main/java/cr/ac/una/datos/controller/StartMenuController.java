@@ -52,7 +52,7 @@ public class StartMenuController extends Controller implements Initializable{
 
     @FXML
     void onActionBtnPlay(ActionEvent event) {
-        FlowController.getInstance().goView("LevelsView");
+        FlowController.getInstance().goView("LevelsSelectorView");
     }
 
 
