@@ -226,6 +226,16 @@ public class AnimationManager {
         transition.play();
     }
 
+    public void animarFadeOut(Node node, Runnable onFinish) {
+        FadeTransition fadeTransition = new FadeTransition();
+        fadeTransition.setDuration(Duration.millis(1500));
+        fadeTransition.setNode(node);
+        fadeTransition.setFromValue(1);
+        fadeTransition.setToValue(0);
+        fadeTransition.setOnFinished(event -> onFinish.run());
+        fadeTransition.play();
+    }
+
 
 
 

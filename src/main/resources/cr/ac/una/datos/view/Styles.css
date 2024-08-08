@@ -3,7 +3,6 @@
 *{
     -fx-backgroundGame-color: #333029;
     -fx-game-color: #333029;
-    -fx-font-family: Pinewood;
 }
 
 
@@ -48,7 +47,7 @@
 .level-display{
 
     -fx-background-image: url("../resources/backLevel.png");
-    -fx-background-size: 97% ;
+    -fx-background-size: stretch; 
     -fx-background-repeat: no-repeat;
 }
 
@@ -69,7 +68,7 @@
 }
 
 .title5{
-    -fx-image: url("../resources/title5.png");
+    -fx-font-family: Pinewood;
 }
 
 
