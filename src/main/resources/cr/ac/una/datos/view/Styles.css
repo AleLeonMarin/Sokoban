@@ -45,6 +45,34 @@
     -fx-background-position: center center;
 }
 
+.level-display{
+
+    -fx-background-image: url("../resources/backLevel.png");
+    -fx-background-size: 97% ;
+    -fx-background-repeat: no-repeat;
+}
+
+.title1{
+    -fx-image: url("../resources/title1.png");
+}
+
+.title2{
+    -fx-image: url("../resources/title2.png");
+}
+
+.title3{
+    -fx-image: url("../resources/title3.png");
+}
+
+.title4{
+    -fx-image: url("../resources/title4.png");
+}
+
+.title5{
+    -fx-image: url("../resources/title5.png");
+}
+
+
 
 
 
