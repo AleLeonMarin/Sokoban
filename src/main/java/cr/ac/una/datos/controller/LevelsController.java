@@ -1,9 +1,6 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
- */
 package cr.ac.una.datos.controller;
 
+import cr.ac.una.datos.model.Game;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -11,61 +8,49 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.HPos;
-import javafx.geometry.VPos;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 
-/**
- * FXML Controller class
- *
- * @author Kendall Fonseca
- */
 public class LevelsController extends Controller implements Initializable {
-
-    /**
-     * Initializes the controller class.
-     */
 
     @FXML
     private GridPane grpLevels;
-    Integer width = 0;
-    Integer height = 0;
-    private char[][] board;
-
+    private Integer width = 0;
+    private Integer height = 0;
+    private List<List<Character>> board;
+    private Integer gridPaneColumnWidth = 55;
+    private Integer gridPaneRowHeight = 55;
+    private Game game;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }
 
-
     @Override
     public void initialize() {
         loadBoardFromFile("src/main/resources/cr/ac/una/datos/resources/Levels/easy_level2.txt");
         resizeGridPane(width, height);
-        loadGridPane();
+       // loadGridPane();
+        game = new Game(board);
+        game.displayBoard(); // Display board for debugging or initial state
     }
 
-
     private void resizeGridPane(int width, int height) {
-        Integer collumnWitdh = 50;
-        Integer rowHeight = 40;
         grpLevels.getColumnConstraints().clear();
         grpLevels.getRowConstraints().clear();
         grpLevels.getChildren().clear();
 
         for (int col = 0; col < width; col++) {
-            grpLevels.getColumnConstraints().add(new ColumnConstraints(collumnWitdh));
+            grpLevels.getColumnConstraints().add(new ColumnConstraints(gridPaneColumnWidth));
         }
         for (int row = 0; row < height; row++) {
-            grpLevels.getRowConstraints().add(new RowConstraints(rowHeight));
+            grpLevels.getRowConstraints().add(new RowConstraints(gridPaneRowHeight));
         }
         System.out.println("Tamaño de gridpane en row: " + grpLevels.getRowCount());
         System.out.println("Tamaño de gridpane columnas: " + grpLevels.getColumnCount());
@@ -82,15 +67,18 @@ public class LevelsController extends Controller implements Initializable {
                 }
             }
             height = lines.size();
-            board = new char[height][width];
-            for (int i = 0; i < height; i++) {
+            board = new ArrayList<>();
+
+            for (String l : lines) {
+                List<Character> row = new ArrayList<>();
                 for (int j = 0; j < width; j++) {
-                    if (j < lines.get(i).length()) {
-                        board[i][j] = lines.get(i).charAt(j);
+                    if (j < l.length()) {
+                        row.add(l.charAt(j));
                     } else {
-                        board[i][j] = ' ';
+                        row.add(' ');
                     }
                 }
+                board.add(row);
             }
 
             printBoard();
@@ -100,44 +88,43 @@ public class LevelsController extends Controller implements Initializable {
     }
 
     public void loadGridPane() {
-        for (int indexHeight = 0; indexHeight < height; indexHeight++) {
-            for (int indexWidth = 0; indexWidth < width; indexWidth++) {
-                identifyBlocks(board[indexHeight][indexWidth], indexHeight, indexWidth);
+        for (int row = 0; row < height; row++) {
+            for (int col = 0; col < width; col++) {
+                identifyBlocks(board.get(row).get(col), row, col);
             }
         }
     }
 
-    public void identifyBlocks(char caracter, int widthPos, int heightPos) {//agregar mas imagenes para meter
-        if (caracter == '#') {
-            cargarDatosImagenes("/cr/ac/una/datos/resources/blockTexture.png", widthPos, heightPos);
-        } else if (caracter == '$') {
-            cargarDatosImagenes("/cr/ac/una/datos/resources/boxTexture.png", widthPos, heightPos);
+    public void identifyBlocks(char character, int row, int col) {
+        if (character == '#') {
+            cargarDatosImagenes("/cr/ac/una/datos/resources/blockTexture.png", row, col, 50, 50);
+        } else if (character == '$') {
+            cargarDatosImagenes("/cr/ac/una/datos/resources/boxTexture.png", row, col, 50, 50);
+        } else if (character == '@') {
+            cargarDatosImagenes("/cr/ac/una/datos/resources/personaje.png", row, col, 50, 60);
         }
+        // Puedes añadir más condiciones si es necesario.
     }
 
-    public void cargarDatosImagenes(String imagePath, int widthPos, int heightPos) {
+    public void cargarDatosImagenes(String imagePath, int rowPos, int colPos, Integer imvWidth, Integer imvHeight) {
         try {
-            Integer imvWitdth = 40;
-            Integer imvHeight = 40;
+            ImageView imageView = new ImageView();
+            Image image = new Image(getClass().getResourceAsStream(imagePath));
 
-            ImageView imvBlock = new ImageView();
-            Image imgBlock = new Image(getClass().getResourceAsStream(imagePath));
-
-            imvBlock.setImage(imgBlock);
-            imvBlock.setFitWidth(imvWitdth);
-            imvBlock.setFitHeight(imvHeight);
-            grpLevels.add(imvBlock, heightPos, widthPos);
+            imageView.setImage(image);
+            imageView.setFitWidth(imvWidth);
+            imageView.setFitHeight(imvHeight);
+            grpLevels.add(imageView, colPos, rowPos);
         } catch (Exception e) {
             System.err.println("Error al cargar la imagen: " + e.getMessage());
             e.printStackTrace();
         }
     }
 
-
     public void printBoard() {
-        for (int i = 0; i < height; i++) {
-            for (int j = 0; j < width; j++) {
-                System.out.print(board[i][j]);
+        for (List<Character> row : board) {
+            for (Character c : row) {
+                System.out.print(c);
             }
             System.out.println();
         }
