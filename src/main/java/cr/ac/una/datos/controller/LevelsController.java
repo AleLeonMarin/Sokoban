@@ -36,7 +36,7 @@ public class LevelsController extends Controller implements Initializable {
     public void initialize() {
         loadBoardFromFile("src/main/resources/cr/ac/una/datos/resources/Levels/easy_level2.txt");
         resizeGridPane(width, height);
-       // loadGridPane();
+        loadGridPane();
         game = new Game(board);
         game.displayBoard(); // Display board for debugging or initial state
     }
@@ -102,6 +102,9 @@ public class LevelsController extends Controller implements Initializable {
             cargarDatosImagenes("/cr/ac/una/datos/resources/boxTexture.png", row, col, 50, 50);
         } else if (character == '@') {
             cargarDatosImagenes("/cr/ac/una/datos/resources/personaje.png", row, col, 50, 60);
+        } else if (character == '.') {
+            cargarDatosImagenes("/cr/ac/una/datos/resources/checkpoint.png", row, col, 50, 50);
+
         }
         // Puedes añadir más condiciones si es necesario.
     }
