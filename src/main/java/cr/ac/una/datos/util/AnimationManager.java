@@ -258,8 +258,8 @@ public class AnimationManager {
         }
 
         // Anadir un delay antes de iniciar la animación
-        PauseTransition delay = new PauseTransition(Duration.seconds(2)); // Aquí defines el tiempo de delay en segundos
-        delay.setOnFinished(event -> timeline.play()); // Inicia la animación después del delay
+        PauseTransition delay = new PauseTransition(Duration.seconds(2));
+        delay.setOnFinished(event -> timeline.play()); // Inicia la animacion despues del delay
         delay.play(); // Inicia el delay
 
         // Al terminar la animacion dejar la ultima imagen fija y eliminar el ImageView
