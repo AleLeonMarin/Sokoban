@@ -13,6 +13,7 @@ import cr.ac.una.datos.util.FlowController;
 public class App extends Application {
 
 
+
     @Override
     public void start(Stage stage) throws IOException {
         // Estado para manejar animaciones guardando en app context

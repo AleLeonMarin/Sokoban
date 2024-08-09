@@ -5,6 +5,7 @@ import javafx.scene.ImageCursor;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 
 import javafx.scene.media.Media;
@@ -226,10 +227,54 @@ public class AnimationManager {
         transition.play();
     }
 
+    public void animarFadeOut(Node node, Runnable onFinish) {
+        FadeTransition fadeTransition = new FadeTransition();
+        fadeTransition.setDuration(Duration.millis(1500));
+        fadeTransition.setNode(node);
+        fadeTransition.setFromValue(1);
+        fadeTransition.setToValue(0);
+        fadeTransition.setOnFinished(event -> onFinish.run());
+        fadeTransition.play();
+    }
+
+
+
+    public void playBrickRemovalAnimation(ImageView imageView) {
+        // Cargar las imágenes
+        Image[] frames = new Image[10];
+        System.out.println("frames.length = " + frames.length);
+        for (int i = 0; i < frames.length; i++) {
+            frames[i] = new Image(getClass().getResourceAsStream("/cr/ac/una/datos/resources/animation/" + i + ".png"));
+        }
+
+        // Crear el Timeline
+        Timeline timeline = new Timeline();
+        for (int i = 0; i < frames.length; i++) {
+            final int index = i;
+            System.out.println("index = " + index);
+            timeline.getKeyFrames().add(
+                    new KeyFrame(Duration.millis(i * 100), event -> imageView.setImage(frames[index]))
+            );
+        }
+
+        // Anadir un delay antes de iniciar la animación
+        PauseTransition delay = new PauseTransition(Duration.seconds(2));
+        delay.setOnFinished(event -> timeline.play()); // Inicia la animacion despues del delay
+        delay.play(); // Inicia el delay
+
+        // Al terminar la animacion dejar la ultima imagen fija y eliminar el ImageView
+        timeline.setOnFinished(event -> {
+            imageView.setVisible(false); // Oculta el ImageView
+        });
+    }
+
+
 
 
 
 }
+
+
 
 
 

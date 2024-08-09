@@ -1,8 +1,8 @@
 /* Constants */
 
 *{
-    -fx-background-color: #333029;
-    -fx-font-family: Pinewood;
+    -fx-backgroundGame-color: #333029;
+    -fx-game-color: #333029;
 }
 
 
@@ -13,6 +13,26 @@
     -fx-background-size: cover;
     -fx-background-position: center center;
 }
+
+.levels-background {
+    -fx-background-color: #f0f0f0;
+    -fx-background-image: url("../resources/levelsView.jpg");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+    -fx-background-position: center center;
+}
+
+.exit-transparent-button {
+    -fx-background-color: transparent;
+    -fx-background-image: url("../resources/btnExit.png");
+    -fx-background-size: cover;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-padding: 0;
+    -fx-border-width: 0;
+}
+
+
 
 .image-button {
     -fx-background-image: url("../resources/btnPlay.png");
@@ -29,11 +49,39 @@
 }
 
 .main-backgroundGame {
-    -fx-background-color: -fx-backgroundGame-color;
+    -fx-background-color: -fx-game-color;
     -fx-background-repeat: no-repeat;
     -fx-background-size: cover;
     -fx-background-position: center center;
 }
+
+.level-display{
+
+    -fx-background-image: url("../resources/backLevel.png");
+    -fx-background-size: stretch; 
+    -fx-background-repeat: no-repeat;
+}
+
+.title1{
+    -fx-image: url("../resources/title1.png");
+}
+
+.title2{
+    -fx-image: url("../resources/title2.png");
+}
+
+.title3{
+    -fx-image: url("../resources/title3.png");
+}
+
+.title4{
+    -fx-image: url("../resources/title4.png");
+}
+
+.title5{
+    -fx-font-family: Pinewood;
+}
+
 
 
 

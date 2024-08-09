@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<?import javafx.scene.control.Button?>
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="608.0" prefWidth="1074.0" styleClass="levels-background" stylesheets="@Styles.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cr.ac.una.datos.controller.LevelsSelectorController">
+   <children>
+      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+         <children>
+            <HBox alignment="CENTER" prefHeight="183.0" prefWidth="1074.0" spacing="30.0">
+               <children>
+                  <AnchorPane prefHeight="183.0" prefWidth="142.0" styleClass="level-display">
+                     <HBox.margin>
+                        <Insets left="11.0" />
+                     </HBox.margin>
+                     <children>
+                        <ImageView fx:id="imgLevel1" fitHeight="150.0" fitWidth="104.0" layoutX="19.0" layoutY="55.0" onMouseClicked="#onMouseClicked" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../resources/level.jpg" />
+                           </image>
+                        </ImageView>
+                        <ImageView fx:id="imgCover1" fitHeight="154.0" fitWidth="143.0" layoutY="30.0" pickOnBounds="true">
+                           <image>
+                              <Image url="@../resources/cover.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="32.0" fitWidth="80.0" layoutX="39.0" layoutY="-2.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../resources/title1.png" />
+                           </image>
+                        </ImageView>
+                     </children></AnchorPane>
+                  <AnchorPane layoutX="481.0" layoutY="10.0" prefHeight="183.0" prefWidth="142.0" styleClass="level-display">
+                     <children>
+                        <ImageView fitHeight="150.0" fitWidth="104.0" layoutX="19.0" layoutY="55.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../resources/level.jpg" />
+                           </image>
+                        </ImageView>
+                        <ImageView fx:id="imgCover2" fitHeight="154.0" fitWidth="143.0" layoutY="30.0" pickOnBounds="true">
+                           <image>
+                              <Image url="@../resources/cover.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="32.0" fitWidth="80.0" layoutX="39.0" layoutY="-2.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../resources/title1.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane layoutX="578.0" layoutY="10.0" prefHeight="183.0" prefWidth="142.0" styleClass="level-display">
+                     <children>
+                        <ImageView fitHeight="150.0" fitWidth="104.0" layoutX="19.0" layoutY="55.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../resources/level.jpg" />
+                           </image>
+                        </ImageView>
+                        <ImageView fx:id="imgCover3" fitHeight="154.0" fitWidth="143.0" layoutY="30.0" pickOnBounds="true">
+                           <image>
+                              <Image url="@../resources/cover.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="32.0" fitWidth="80.0" layoutX="39.0" layoutY="-2.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../resources/title1.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </AnchorPane>
+               </children>
+               <VBox.margin>
+                  <Insets top="45.0" />
+               </VBox.margin>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="185.0" prefWidth="1074.0" spacing="50.0">
+               <VBox.margin>
+                  <Insets top="40.0" />
+               </VBox.margin>
+               <children>
+                  <AnchorPane prefHeight="183.0" prefWidth="142.0" styleClass="level-display">
+                     <children>
+                        <ImageView fitHeight="150.0" fitWidth="104.0" layoutX="19.0" layoutY="55.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../resources/level.jpg" />
+                           </image>
+                        </ImageView>
+                        <ImageView fx:id="imgCover4" fitHeight="154.0" fitWidth="143.0" layoutY="30.0" pickOnBounds="true">
+                           <image>
+                              <Image url="@../resources/cover.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="32.0" fitWidth="80.0" layoutX="39.0" layoutY="-2.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../resources/title1.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane layoutX="476.0" layoutY="10.0" prefHeight="183.0" prefWidth="142.0" styleClass="level-display">
+                     <children>
+                        <ImageView fitHeight="150.0" fitWidth="104.0" layoutX="19.0" layoutY="55.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../resources/level.jpg" />
+                           </image>
+                        </ImageView>
+                        <ImageView fx:id="imgCover5" fitHeight="154.0" fitWidth="143.0" layoutY="30.0" pickOnBounds="true">
+                           <image>
+                              <Image url="@../resources/cover.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="32.0" fitWidth="80.0" layoutX="39.0" layoutY="-2.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../resources/title1.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </AnchorPane>
+               </children></HBox>
+         </children>
+      </VBox>
+      <Button fx:id="btnExit" mnemonicParsing="false" onAction="#onActionBtnExit" prefHeight="112.0" prefWidth="126.0" styleClass="exit-transparent-button" translateX="-435.0" translateY="165.0" />
+   </children>
+</StackPane>

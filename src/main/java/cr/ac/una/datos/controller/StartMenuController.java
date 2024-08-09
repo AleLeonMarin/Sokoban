@@ -7,6 +7,7 @@ package cr.ac.una.datos.controller;
 import java.net.URL;
 import java.util.ResourceBundle;
 import cr.ac.una.datos.util.AnimationManager;
+import cr.ac.una.datos.util.AppContext;
 import cr.ac.una.datos.util.FlowController;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -37,23 +38,39 @@ public class StartMenuController extends Controller implements Initializable{
     @FXML
     private MFXButton btnPlay;
 
+    @FXML
+    private ImageView imgAnimation;
+
     AnimationManager animationManager = AnimationManager.getInstance();
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         animationManager.applyFadeAnimation(imgLogo);
         animationManager.applyFloatingAnimation(imgLogo);
+
+        if ((boolean) AppContext.getInstance().get("StartAnimation")) {
+            animationManager.playBrickRemovalAnimation(imgAnimation);
+        }else {
+            imgAnimation.setVisible(false);
+        }
+
     }
 
     @Override
     public void initialize(){
 
+
     }
 
     @FXML
     void onActionBtnPlay(ActionEvent event) {
-        FlowController.getInstance().goView("LevelsView");
+
+        AppContext.getInstance().set("StartAnimation", false);
+
+        FlowController.getInstance().goView("LevelsSelectorView");
     }
+
+
 
 
 
