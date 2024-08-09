@@ -34,7 +34,7 @@ public class LevelsController extends Controller implements Initializable {
 
     @Override
     public void initialize() {
-        loadBoardFromFile("src/main/resources/cr/ac/una/datos/resources/Levels/easy_level2.txt");
+        loadBoardFromFile("src/main/resources/cr/ac/una/datos/resources/Levels/easy_level1.txt");
         resizeGridPane(width, height);
         loadGridPane();
         game = new Game(board);
