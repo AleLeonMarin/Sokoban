@@ -15,6 +15,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -48,6 +50,9 @@ public class LevelsSelectorController extends Controller implements Initializabl
 
     @FXML
     private Button btnExit;
+
+    @FXML
+    private StackPane root;
 
     private Runnable onFinishOut;
 

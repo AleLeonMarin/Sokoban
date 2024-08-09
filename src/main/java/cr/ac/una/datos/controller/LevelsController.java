@@ -1,6 +1,8 @@
 package cr.ac.una.datos.controller;
 
 import cr.ac.una.datos.model.Game;
+import cr.ac.una.datos.util.FlowController;
+import cr.ac.una.datos.util.Mensaje;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -12,11 +14,14 @@ import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
+import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 
@@ -24,6 +29,8 @@ public class LevelsController extends Controller implements Initializable {
 
     @FXML
     private GridPane grpLevels;
+    @FXML
+    private StackPane root;
     private Integer width = 0;
     private Integer height = 0;
     private List<List<Character>> board;
@@ -81,6 +88,8 @@ public class LevelsController extends Controller implements Initializable {
             game.displayBoard();  // Muestra el tablero actualizado en la consola (opcional)
             if (game.hasWon()) {
                 System.out.println("¡Has ganado!");
+                new Mensaje().showModal(AlertType.INFORMATION, "Nivel Completado", getStage(), "Has completado el nivel");
+                FlowController.getInstance().goView("LevelsSelectorView");
             }
         }
     }
@@ -154,7 +163,8 @@ public class LevelsController extends Controller implements Initializable {
             cargarDatosImagenes("/cr/ac/una/datos/resources/personaje.png", row, col, 50, 60);
         } else if (character == '.') {
             cargarDatosImagenes("/cr/ac/una/datos/resources/checkpoint.png", row, col, 50, 50);
-
+        }else if(character == '!'){
+            cargarDatosImagenes("/cr/ac/una/datos/resources/boxTexture.png", row, col, 50, 50);
         }
         // Puedes añadir más condiciones si es necesario.
     }
