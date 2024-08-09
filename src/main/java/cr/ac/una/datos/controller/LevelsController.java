@@ -1,6 +1,7 @@
 package cr.ac.una.datos.controller;
 
 import cr.ac.una.datos.model.Game;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -8,6 +9,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.image.Image;
@@ -15,6 +17,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.Pane;
 
 public class LevelsController extends Controller implements Initializable {
 
@@ -27,10 +31,6 @@ public class LevelsController extends Controller implements Initializable {
     private Integer gridPaneRowHeight = 55;
     private Game game;
 
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }
 
     @Override
     public void initialize() {
@@ -40,6 +40,56 @@ public class LevelsController extends Controller implements Initializable {
         game = new Game(board);
         game.displayBoard(); // Display board for debugging or initial state
     }
+
+
+// Dentro de la clase LevelsController...
+
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        grpLevels.setFocusTraversable(true);  // Asegúrate de que el GridPane pueda recibir eventos de teclado
+        grpLevels.setOnKeyPressed(this::handleKeyPress);  // Asocia el método de manejo de teclas
+        initialize();
+    }
+
+    private void handleKeyPress(KeyEvent event) {
+        switch (event.getCode()) {
+            case W:
+                movePlayer(-1, 0);  // Mover hacia arriba
+                game.displayBoard();
+                break;
+            case S:
+                movePlayer(1, 0);  // Mover hacia abajo
+                game.displayBoard();
+                break;
+            case A:
+                movePlayer(0, -1);  // Mover hacia la izquierda
+                game.displayBoard();
+                break;
+            case D:
+                movePlayer(0, 1);  // Mover hacia la derecha
+                game.displayBoard();
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void movePlayer(int rowOffset, int colOffset) {
+        if (game.isValidMove(rowOffset, colOffset)) {
+            game.movePlayer(rowOffset, colOffset);
+            updateGridPane();  // Actualiza el GridPane después de mover al jugador
+            game.displayBoard();  // Muestra el tablero actualizado en la consola (opcional)
+            if (game.hasWon()) {
+                System.out.println("¡Has ganado!");
+            }
+        }
+    }
+
+    private void updateGridPane() {
+        grpLevels.getChildren().clear();
+        loadGridPane();  // Recarga el GridPane con la nueva posición del jugador y cajas
+    }
+
 
     private void resizeGridPane(int width, int height) {
         grpLevels.getColumnConstraints().clear();
