@@ -264,8 +264,7 @@ public class AnimationManager {
 
         // Al terminar la animacion dejar la ultima imagen fija y eliminar el ImageView
         timeline.setOnFinished(event -> {
-            imageView.setImage(frames[9]); // Muestra la ultima imagen
-            ((Pane) imageView.getParent()).getChildren().remove(imageView); // Elimina el ImageView de su contenedor
+            imageView.setVisible(false); // Oculta el ImageView
         });
     }
 
