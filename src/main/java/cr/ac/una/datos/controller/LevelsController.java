@@ -1,6 +1,8 @@
 package cr.ac.una.datos.controller;
 
 import cr.ac.una.datos.model.Game;
+import cr.ac.una.datos.util.FlowController;
+import cr.ac.una.datos.util.Mensaje;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -9,8 +11,11 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.concurrent.Flow;
+
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.ColumnConstraints;
@@ -80,6 +85,9 @@ public class LevelsController extends Controller implements Initializable {
             game.displayBoard();  // Muestra el tablero actualizado en la consola (opcional)
             if (game.hasWon()) {
                 System.out.println("¡Has ganado!");
+                new Mensaje().showModal(AlertType.CONFIRMATION, "Nivel Completado", getStage(), "Has completado el nivel");
+                FlowController.getInstance().goViewInWindow("LevelsSelectorView");
+                FlowController.getInstance().salir();
             }
         }
     }
@@ -153,7 +161,8 @@ public class LevelsController extends Controller implements Initializable {
             cargarDatosImagenes("/cr/ac/una/datos/resources/personaje.png", row, col, 50, 60);
         } else if (character == '.') {
             cargarDatosImagenes("/cr/ac/una/datos/resources/checkpoint.png", row, col, 50, 50);
-
+        }else if (character == '!') {
+            cargarDatosImagenes("/cr/ac/una/datos/resources/boxTexture.png", row, col, 50, 50);
         }
         // Puedes añadir más condiciones si es necesario.
     }

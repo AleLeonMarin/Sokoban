@@ -8,7 +8,7 @@ public class Game {
     private static final char GOAL = '.';
     private static final char WALL = '#';
     private static final char EMPTY = ' ';
-    private static final char BOX_ON_GOAL = '*';
+    private static final char BOX_ON_GOAL = '!';
     private static final char PLAYER_ON_GOAL = '+';
 
     private List<List<Character>> board;
