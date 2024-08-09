@@ -9,11 +9,12 @@ import java.util.ResourceBundle;
 
 import cr.ac.una.datos.util.AnimationManager;
 import cr.ac.una.datos.util.FlowController;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -45,6 +46,9 @@ public class LevelsSelectorController extends Controller implements Initializabl
     @FXML
     private ImageView imgLevel1;
 
+    @FXML
+    private Button btnExit;
+
     private Runnable onFinishOut;
 
     
@@ -70,5 +74,9 @@ public class LevelsSelectorController extends Controller implements Initializabl
             imgCover1.setDisable(true);
         };
         animationManager.animarFadeOut(imgCover1, onFinishOut);
+    }
+
+    public void onActionBtnExit(ActionEvent event) {
+        FlowController.getInstance().goView("StartMenuView");
     }
 }

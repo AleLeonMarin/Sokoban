@@ -22,6 +22,17 @@
     -fx-background-position: center center;
 }
 
+.exit-transparent-button {
+    -fx-background-color: transparent;
+    -fx-background-image: url("../resources/btnExit.png");
+    -fx-background-size: cover;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-padding: 0;
+    -fx-border-width: 0;
+}
+
+
 
 .image-button {
     -fx-background-image: url("../resources/btnPlay.png");

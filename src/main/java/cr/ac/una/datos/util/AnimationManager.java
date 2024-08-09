@@ -5,6 +5,7 @@ import javafx.scene.ImageCursor;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 
 import javafx.scene.media.Media;
@@ -238,8 +239,43 @@ public class AnimationManager {
 
 
 
+    public void playBrickRemovalAnimation(ImageView imageView) {
+        // Cargar las imágenes
+        Image[] frames = new Image[10];
+        System.out.println("frames.length = " + frames.length);
+        for (int i = 0; i < frames.length; i++) {
+            frames[i] = new Image(getClass().getResourceAsStream("/cr/ac/una/datos/resources/animation/" + i + ".png"));
+        }
+
+        // Crear el Timeline
+        Timeline timeline = new Timeline();
+        for (int i = 0; i < frames.length; i++) {
+            final int index = i;
+            System.out.println("index = " + index);
+            timeline.getKeyFrames().add(
+                    new KeyFrame(Duration.millis(i * 100), event -> imageView.setImage(frames[index]))
+            );
+        }
+
+        // Anadir un delay antes de iniciar la animación
+        PauseTransition delay = new PauseTransition(Duration.seconds(2)); // Aquí defines el tiempo de delay en segundos
+        delay.setOnFinished(event -> timeline.play()); // Inicia la animación después del delay
+        delay.play(); // Inicia el delay
+
+        // Al terminar la animacion dejar la ultima imagen fija y eliminar el ImageView
+        timeline.setOnFinished(event -> {
+            imageView.setImage(frames[9]); // Muestra la ultima imagen
+            ((Pane) imageView.getParent()).getChildren().remove(imageView); // Elimina el ImageView de su contenedor
+        });
+    }
+
+
+
+
 
 }
+
+
 
 
 

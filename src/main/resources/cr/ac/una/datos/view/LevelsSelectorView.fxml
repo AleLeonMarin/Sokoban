@@ -8,6 +8,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
+<?import javafx.scene.control.Button?>
 <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="608.0" prefWidth="1074.0" styleClass="levels-background" stylesheets="@Styles.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cr.ac.una.datos.controller.LevelsSelectorController">
    <children>
       <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
@@ -124,5 +125,6 @@
                </children></HBox>
          </children>
       </VBox>
+      <Button fx:id="btnExit" mnemonicParsing="false" onAction="#onActionBtnExit" prefHeight="112.0" prefWidth="126.0" styleClass="exit-transparent-button" translateX="-435.0" translateY="165.0" />
    </children>
 </StackPane>

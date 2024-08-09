@@ -37,23 +37,32 @@ public class StartMenuController extends Controller implements Initializable{
     @FXML
     private MFXButton btnPlay;
 
+    @FXML
+    private ImageView imgAnimation;
+
     AnimationManager animationManager = AnimationManager.getInstance();
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         animationManager.applyFadeAnimation(imgLogo);
         animationManager.applyFloatingAnimation(imgLogo);
+        System.out.println("StartMenuController.initialize");
+        animationManager.playBrickRemovalAnimation(imgAnimation);
     }
 
     @Override
     public void initialize(){
 
+
     }
 
     @FXML
     void onActionBtnPlay(ActionEvent event) {
+
         FlowController.getInstance().goView("LevelsSelectorView");
     }
+
+
 
 
 
