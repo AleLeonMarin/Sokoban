@@ -5,14 +5,10 @@ import javafx.scene.ImageCursor;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Pane;
 import javafx.util.Duration;
-
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
-
 import java.net.URL;
-import java.util.function.Consumer;
 
 public class AnimationManager {
 
