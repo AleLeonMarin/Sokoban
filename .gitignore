@@ -1,6 +1,5 @@
 #Directories
 
-target/
-
+#target/
 /.idea
 .vscode/

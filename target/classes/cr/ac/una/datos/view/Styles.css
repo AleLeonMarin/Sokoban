@@ -1,0 +1,41 @@
+/* Constants */
+
+*{
+    -fx-background-color: #333029;
+    -fx-font-family: Pinewood;
+}
+
+
+.main-background {
+    -fx-background-color: #f0f0f0;
+    -fx-background-image: url("../resources/mainBackground.jpg");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+    -fx-background-position: center center;
+}
+
+.image-button {
+    -fx-background-image: url("../resources/btnPlay.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: contain;
+    -fx-background-position: center;
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-padding: 0;
+    -fx-background-radius: 10;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.75), 10, 0, 0, 2);
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+}
+
+.main-backgroundGame {
+    -fx-background-color: -fx-backgroundGame-color;
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+    -fx-background-position: center center;
+}
+
+
+
+
+
