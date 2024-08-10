@@ -55,6 +55,7 @@ public class LevelsController extends Controller implements Initializable {
         resizeGridPane(width, height);
         loadGridPane();
         game = new Game(board);
+        movementCounter = 0;
         game.displayBoard(); // Display board for debugging or initial state
     }
 
