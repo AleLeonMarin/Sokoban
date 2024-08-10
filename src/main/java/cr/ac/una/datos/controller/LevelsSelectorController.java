@@ -8,6 +8,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import cr.ac.una.datos.util.AnimationManager;
+import cr.ac.una.datos.util.AppContext;
 import cr.ac.una.datos.util.FlowController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -66,6 +67,22 @@ public class LevelsSelectorController extends Controller implements Initializabl
     
     @FXML
     void onMouseClicked(MouseEvent event) {
+        if (event.getSource().equals(imgLevel1)) {
+            AppContext.getInstance().set("level", 1);
+        }
+        else if (event.getSource().equals(imgCover2)) {
+            AppContext.getInstance().set("level", 2);
+        }
+        else if (event.getSource().equals(imgCover3)) {
+            AppContext.getInstance().set("level", 3);
+        }
+        else if (event.getSource().equals(imgCover4)) {
+            AppContext.getInstance().set("level", 4);
+        }
+        else if (event.getSource().equals(imgCover5)) {
+            AppContext.getInstance().set("level", 5);
+        }
+
         FlowController.getInstance().goView("LevelsView");
     }
     

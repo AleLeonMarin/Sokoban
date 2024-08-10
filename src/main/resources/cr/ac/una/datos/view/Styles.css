@@ -14,6 +14,15 @@
     -fx-background-position: center center;
 }
 
+
+.match-background {
+    -fx-background-color: #f0f0f0;
+    -fx-background-image: url("../resources/gameBackground.jpg");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+    -fx-background-position: center center;
+}
+
 .levels-background {
     -fx-background-color: #f0f0f0;
     -fx-background-image: url("../resources/levelsView.jpg");

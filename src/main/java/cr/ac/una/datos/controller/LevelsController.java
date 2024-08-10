@@ -1,6 +1,7 @@
 package cr.ac.una.datos.controller;
 
 import cr.ac.una.datos.model.Game;
+import cr.ac.una.datos.util.AppContext;
 import cr.ac.una.datos.util.FlowController;
 import cr.ac.una.datos.util.Mensaje;
 
@@ -21,6 +22,7 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.StackPane;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
@@ -39,6 +41,14 @@ public class LevelsController extends Controller implements Initializable {
     private Game game;
 
 
+    private int movementCounter = 0;
+
+
+    @FXML
+    private Text labelLvl;
+    @FXML
+    private Text labelMovements;
+
     @Override
     public void initialize() {
         loadBoardFromFile("src/main/resources/cr/ac/una/datos/resources/Levels/easy_level1.txt");
@@ -55,6 +65,23 @@ public class LevelsController extends Controller implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         grpLevels.setFocusTraversable(true);  // Asegúrate de que el GridPane pueda recibir eventos de teclado
         grpLevels.setOnKeyPressed(this::handleKeyPress);  // Asocia el método de manejo de teclas
+
+        if ((int) AppContext.getInstance().get("level") == 1) {
+            labelLvl.setText("Nivel 1");
+        }
+        if ((int) AppContext.getInstance().get("level") == 2) {
+            labelLvl.setText("Nivel 2");
+        }
+        if ((int) AppContext.getInstance().get("level") == 3) {
+            labelLvl.setText("Nivel 3");
+        }
+        if ((int) AppContext.getInstance().get("level") == 4) {
+            labelLvl.setText("Nivel 4");
+        }
+        if ((int) AppContext.getInstance().get("level") == 5) {
+            labelLvl.setText("Nivel 5");
+        }
+
         initialize();
     }
 
@@ -63,6 +90,7 @@ public class LevelsController extends Controller implements Initializable {
             case W:
                 movePlayer(-1, 0);  // Mover hacia arriba
                 game.displayBoard();
+
                 break;
             case S:
                 movePlayer(1, 0);  // Mover hacia abajo
@@ -71,6 +99,7 @@ public class LevelsController extends Controller implements Initializable {
             case A:
                 movePlayer(0, -1);  // Mover hacia la izquierda
                 game.displayBoard();
+
                 break;
             case D:
                 movePlayer(0, 1);  // Mover hacia la derecha
@@ -81,9 +110,15 @@ public class LevelsController extends Controller implements Initializable {
         }
     }
 
+    private void uptadeStats(){
+        labelMovements.setText(String.valueOf(movementCounter));
+    }
+
     private void movePlayer(int rowOffset, int colOffset) {
         if (game.isValidMove(rowOffset, colOffset)) {
             game.movePlayer(rowOffset, colOffset);
+            movementCounter++;
+            uptadeStats();
             updateGridPane();  // Actualiza el GridPane después de mover al jugador
             game.displayBoard();  // Muestra el tablero actualizado en la consola (opcional)
             if (game.hasWon()) {
