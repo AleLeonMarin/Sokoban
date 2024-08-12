@@ -202,23 +202,38 @@ public class LevelsController extends Controller implements Initializable {
         }else if(character == '!'){
             cargarDatosImagenes("/cr/ac/una/datos/resources/boxTexture.png", row, col, 50, 50);
         }
-        // Puedes añadir más condiciones si es necesario.
-    }
-
-    public void cargarDatosImagenes(String imagePath, int rowPos, int colPos, Integer imvWidth, Integer imvHeight) {
-        try {
-            ImageView imageView = new ImageView();
-            Image image = new Image(getClass().getResourceAsStream(imagePath));
-
-            imageView.setImage(image);
-            imageView.setFitWidth(imvWidth);
-            imageView.setFitHeight(imvHeight);
-            grpLevels.add(imageView, colPos, rowPos);
-        } catch (Exception e) {
-            System.err.println("Error al cargar la imagen: " + e.getMessage());
-            e.printStackTrace();
+        else if (character == '+') {
+            ImageView checkpointView = cargarDatosImagenes("/cr/ac/una/datos/resources/checkpoint.png", row, col, 50, 50);
+            checkpointView.setOpacity(0.5);
+            ImageView playerView = cargarDatosImagenes("/cr/ac/una/datos/resources/personaje.png", row, col, 50, 60);
         }
     }
+
+    public ImageView cargarDatosImagenes(String imagePath, int row, int col, int width, int height) {
+        Image image = new Image(imagePath);
+        ImageView imageView = new ImageView(image);
+        imageView.setFitWidth(width);
+        imageView.setFitHeight(height);
+
+        grpLevels.add(imageView, col, row);
+
+        return imageView;
+    }
+
+//    public void cargarDatosImagenes(String imagePath, int rowPos, int colPos, Integer imvWidth, Integer imvHeight) {
+//        try {
+//            ImageView imageView = new ImageView();
+//            Image image = new Image(getClass().getResourceAsStream(imagePath));
+//
+//            imageView.setImage(image);
+//            imageView.setFitWidth(imvWidth);
+//            imageView.setFitHeight(imvHeight);
+//            grpLevels.add(imageView, colPos, rowPos);
+//        } catch (Exception e) {
+//            System.err.println("Error al cargar la imagen: " + e.getMessage());
+//            e.printStackTrace();
+//        }
+//    }
 
     public void printBoard() {
         for (List<Character> row : board) {
