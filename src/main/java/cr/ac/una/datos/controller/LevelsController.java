@@ -5,9 +5,7 @@ import cr.ac.una.datos.util.AppContext;
 import cr.ac.una.datos.util.FlowController;
 import cr.ac.una.datos.util.Mensaje;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +14,7 @@ import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.ColumnConstraints;
@@ -40,6 +39,13 @@ public class LevelsController extends Controller implements Initializable {
     private Integer gridPaneRowHeight = 55;
     private Game game;
 
+    //definir constantes con la ubicacion de cada uno de los niveles
+    private final String LEVEL1 = "src/main/resources/cr/ac/una/datos/resources/Levels/easy_level1.txt";
+    private final String LEVEL2 = "src/main/resources/cr/ac/una/datos/resources/Levels/easy_level2.txt";
+    private final String LEVEL3 = "src/main/resources/cr/ac/una/datos/resources/Levels/intermedium_level1.txt";
+    private final String LEVEL4 = "src/main/resources/cr/ac/una/datos/resources/Levels/intermedium_level2.txt";
+    private final String LEVEL5 = "src/main/resources/cr/ac/una/datos/resources/Levels/avanced_level1.txt";
+
 
     private int movementCounter = 0;
 
@@ -49,9 +55,28 @@ public class LevelsController extends Controller implements Initializable {
     @FXML
     private Text labelMovements;
 
+    @FXML
+    private Button btnSaveAndExit;
+
     @Override
     public void initialize() {
-        loadBoardFromFile("src/main/resources/cr/ac/una/datos/resources/Levels/avanced_level1.txt");
+
+        if ((int) AppContext.getInstance().get("level") == 1) {
+            loadBoardFromFile(LEVEL1);
+        }
+        if ((int) AppContext.getInstance().get("level") == 2) {
+            loadBoardFromFile(LEVEL2);
+        }
+        if ((int) AppContext.getInstance().get("level") == 3) {
+            loadBoardFromFile(LEVEL3);
+        }
+        if ((int) AppContext.getInstance().get("level") == 4) {
+            loadBoardFromFile(LEVEL4);
+        }
+        if ((int) AppContext.getInstance().get("level") == 5) {
+            loadBoardFromFile(LEVEL5);
+        }
+
         resizeGridPane(width, height);
         loadGridPane();
         game = new Game(board);
@@ -64,8 +89,8 @@ public class LevelsController extends Controller implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        grpLevels.setFocusTraversable(true);  // Asegúrate de que el GridPane pueda recibir eventos de teclado
-        grpLevels.setOnKeyPressed(this::handleKeyPress);  // Asocia el método de manejo de teclas
+        grpLevels.setFocusTraversable(true);
+        grpLevels.setOnKeyPressed(this::handleKeyPress);
 
         if ((int) AppContext.getInstance().get("level") == 1) {
             labelLvl.setText("Nivel 1");
@@ -246,4 +271,36 @@ public class LevelsController extends Controller implements Initializable {
         System.out.println("Altura: " + height);
         System.out.println("Ancho: " + width);
     }
+
+
+    @FXML
+    private void handleSaveAndExit() {
+        saveCurrentGame();
+        FlowController.getInstance().goView("LevelsSelectorView");
+
+    }
+
+    private void saveCurrentGame() {
+        String saveDirectoryPath = "src/main/resources/cr/ac/una/datos/resources/Levels/saved_levels";
+        File directory = new File(saveDirectoryPath);
+        if (!directory.exists()) {
+            directory.mkdirs();
+        }
+
+        String saveFilePath = saveDirectoryPath + "/saved_game.txt";
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(saveFilePath))) {
+            for (List<Character> row : board) {
+                for (Character ch : row) {
+                    writer.write(ch);
+                }
+                writer.newLine();
+            }
+            System.out.println("Partida guardada en: " + saveFilePath);
+        } catch (IOException e) {
+            System.err.println("Error al guardar la partida: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+    }
+
 }

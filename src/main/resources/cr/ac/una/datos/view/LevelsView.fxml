@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
@@ -54,5 +55,6 @@
             <Font name="SimSun-ExtB" size="18.0" />
          </font>
       </Text>
+      <Button fx:id="btnSaveAndExit" mnemonicParsing="false" onAction="#handleSaveAndExit" prefHeight="25.0" prefWidth="109.0" text="Salir y Guardar" translateY="270.0" />
    </children>
 </StackPane>

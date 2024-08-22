@@ -30,24 +30,20 @@ public class LevelsSelectorController extends Controller implements Initializabl
      * Initializes the controller class.
      */
 
-    
-    @FXML
-    private ImageView imgCover1;
-
-    @FXML
-    private ImageView imgCover2;
-
-    @FXML
-    private ImageView imgCover3;
-
-    @FXML
-    private ImageView imgCover4;
-
-    @FXML
-    private ImageView imgCover5;
-
     @FXML
     private ImageView imgLevel1;
+
+    @FXML
+    private ImageView imgLevel2;
+
+    @FXML
+    private ImageView imgLevel3;
+
+    @FXML
+    private ImageView imgLevel4;
+
+    @FXML
+    private ImageView imgLevel5;
 
     @FXML
     private Button btnExit;
@@ -62,7 +58,7 @@ public class LevelsSelectorController extends Controller implements Initializabl
     
     @Override
     public void initialize(){  
-        disableCover();
+//        disableCover();
     }
     
     @FXML
@@ -70,18 +66,19 @@ public class LevelsSelectorController extends Controller implements Initializabl
         if (event.getSource().equals(imgLevel1)) {
             AppContext.getInstance().set("level", 1);
         }
-        else if (event.getSource().equals(imgCover2)) {
+        else if (event.getSource().equals(imgLevel2)) {
             AppContext.getInstance().set("level", 2);
+            System.out.println("Level 2");
         }
-        else if (event.getSource().equals(imgCover3)) {
+        else if (event.getSource().equals(imgLevel3)) {
             AppContext.getInstance().set("level", 3);
         }
-        else if (event.getSource().equals(imgCover4)) {
+       else if (event.getSource().equals(imgLevel4)) {
             AppContext.getInstance().set("level", 4);
         }
-        else if (event.getSource().equals(imgCover5)) {
-            AppContext.getInstance().set("level", 5);
-        }
+       else if (event.getSource().equals(imgLevel5)) {
+           AppContext.getInstance().set("level", 5);
+       }
 
         FlowController.getInstance().goView("LevelsView");
     }
@@ -91,14 +88,19 @@ public class LevelsSelectorController extends Controller implements Initializabl
         // TODO
     }
     
-    private void disableCover(){
-         onFinishOut = () -> {
-            imgCover1.setDisable(true);
-        };
-        animationManager.animarFadeOut(imgCover1, onFinishOut);
-    }
+//    private void disableCover(){
+////         onFinishOut = () -> {
+////            imgCover1.setDisable(true);
+////        };
+////        animationManager.animarFadeOut(imgCover1, onFinishOut);
+////    }
 
     public void onActionBtnExit(ActionEvent event) {
         FlowController.getInstance().goView("StartMenuView");
     }
+
+
+
 }
+
+

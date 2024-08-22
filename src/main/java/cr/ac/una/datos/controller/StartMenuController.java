@@ -39,6 +39,12 @@ public class StartMenuController extends Controller implements Initializable{
     private MFXButton btnPlay;
 
     @FXML
+    private MFXButton btnExit;
+
+    @FXML
+    private MFXButton btnSavedMatches;
+
+    @FXML
     private ImageView imgAnimation;
 
     AnimationManager animationManager = AnimationManager.getInstance();
@@ -66,10 +72,19 @@ public class StartMenuController extends Controller implements Initializable{
     void onActionBtnPlay(ActionEvent event) {
 
         AppContext.getInstance().set("StartAnimation", false);
-
         FlowController.getInstance().goView("LevelsSelectorView");
     }
 
+
+    @FXML
+    void onActionBtnSavedMatches(ActionEvent event) {
+        //FlowController.getInstance().goView("SavedMatchesView");
+    }
+
+    @FXML
+    void onActionBtnExit(ActionEvent event) {
+        System.exit(0);
+    }
 
 
 
