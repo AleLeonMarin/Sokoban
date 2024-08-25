@@ -78,7 +78,7 @@ public class StartMenuController extends Controller implements Initializable{
 
     @FXML
     void onActionBtnSavedMatches(ActionEvent event) {
-        //FlowController.getInstance().goView("SavedMatchesView");
+        FlowController.getInstance().goView("SavedLevelsView");
     }
 
     @FXML
