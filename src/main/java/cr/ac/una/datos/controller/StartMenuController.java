@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+
 import cr.ac.una.datos.util.AnimationManager;
 import cr.ac.una.datos.util.AppContext;
 import cr.ac.una.datos.util.FlowController;
@@ -26,7 +27,7 @@ import io.github.palexdev.materialfx.controls.MFXButton;
  *
  * @author Kendall Fonseca
  */
-public class StartMenuController extends Controller implements Initializable{
+public class StartMenuController extends Controller implements Initializable {
 
     /**
      * Initializes the controller class.
@@ -60,7 +61,7 @@ public class StartMenuController extends Controller implements Initializable{
 
         if ((boolean) AppContext.getInstance().get("StartAnimation")) {
             animationManager.playBrickRemovalAnimation(imgAnimation);
-        }else {
+        } else {
             imgAnimation.setVisible(false);
         }
 
@@ -68,7 +69,7 @@ public class StartMenuController extends Controller implements Initializable{
     }
 
     @Override
-    public void initialize(){
+    public void initialize() {
 
 
     }
@@ -91,11 +92,4 @@ public class StartMenuController extends Controller implements Initializable{
         System.exit(0);
     }
 
-
-
-
-
-
-
 }
-

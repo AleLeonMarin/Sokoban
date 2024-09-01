@@ -3,6 +3,7 @@ package cr.ac.una.datos.controller;
 import cr.ac.una.datos.model.Game;
 import cr.ac.una.datos.util.AppContext;
 import cr.ac.una.datos.util.FlowController;
+import cr.ac.una.datos.util.Formato;
 import cr.ac.una.datos.util.Mensaje;
 
 import java.io.*;
@@ -11,6 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert.AlertType;
@@ -24,7 +27,9 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.Pane;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.util.Duration;
 
 public class LevelsController extends Controller implements Initializable {
 
@@ -38,13 +43,18 @@ public class LevelsController extends Controller implements Initializable {
     private Integer gridPaneColumnWidth = 55;
     private Integer gridPaneRowHeight = 55;
     private Game game;
+    private List<Character> playerMovements;
 
-    //definir constantes con la ubicacion de cada uno de los niveles
-    private final String LEVEL1 = "src/main/resources/cr/ac/una/datos/resources/Levels/easy_level1.txt";
-    private final String LEVEL2 = "src/main/resources/cr/ac/una/datos/resources/Levels/easy_level2.txt";
-    private final String LEVEL3 = "src/main/resources/cr/ac/una/datos/resources/Levels/intermedium_level1.txt";
-    private final String LEVEL4 = "src/main/resources/cr/ac/una/datos/resources/Levels/intermedium_level2.txt";
-    private final String LEVEL5 = "src/main/resources/cr/ac/una/datos/resources/Levels/avanced_level1.txt";
+
+    private final String LEVEL1 = "src/main/resources/cr/ac/una/datos/resources/Levels/level1.txt";
+    private final String LEVEL2 = "src/main/resources/cr/ac/una/datos/resources/Levels/level2.txt";
+    private final String LEVEL3 = "src/main/resources/cr/ac/una/datos/resources/Levels/level3.txt";
+    private final String LEVEL4 = "src/main/resources/cr/ac/una/datos/resources/Levels/level4.txt";
+    private final String LEVEL5 = "src/main/resources/cr/ac/una/datos/resources/Levels/level5.txt";
+    private final char UP = 'u';
+    private final char DOWN = 'd';
+    private final char LEFT = 'l';
+    private final char RIGHT = 'r';
 
 
     private int movementCounter = 0;
@@ -60,83 +70,77 @@ public class LevelsController extends Controller implements Initializable {
 
     @Override
     public void initialize() {
+    }
 
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        this.playerMovements = new ArrayList<>();
+        grpLevels.setFocusTraversable(true);
+        grpLevels.setOnKeyPressed(this::handleKeyPress);
+        setUp();
+    }
+
+    private void setUp() {
         if ((int) AppContext.getInstance().get("level") == 1) {
             loadBoardFromFile(LEVEL1);
-        }
-        if ((int) AppContext.getInstance().get("level") == 2) {
+            labelLvl.setText("Nivel 1");
+        } else if ((int) AppContext.getInstance().get("level") == 2) {
             loadBoardFromFile(LEVEL2);
-        }
-        if ((int) AppContext.getInstance().get("level") == 3) {
+            labelLvl.setText("Nivel 2");
+        } else if ((int) AppContext.getInstance().get("level") == 3) {
             loadBoardFromFile(LEVEL3);
-        }
-        if ((int) AppContext.getInstance().get("level") == 4) {
+            labelLvl.setText("Nivel 3");
+        } else if ((int) AppContext.getInstance().get("level") == 4) {
             loadBoardFromFile(LEVEL4);
-        }
-        if ((int) AppContext.getInstance().get("level") == 5) {
+            labelLvl.setText("Nivel 4");
+        } else if ((int) AppContext.getInstance().get("level") == 5) {
             loadBoardFromFile(LEVEL5);
+            labelLvl.setText("Nivel 5");
         }
 
         resizeGridPane(width, height);
         loadGridPane();
         game = new Game(board);
         movementCounter = 0;
-        game.displayBoard(); // Display board for debugging or initial state
-    }
-
-
-// Dentro de la clase LevelsController...
-
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        grpLevels.setFocusTraversable(true);
-        grpLevels.setOnKeyPressed(this::handleKeyPress);
-
-        if ((int) AppContext.getInstance().get("level") == 1) {
-            labelLvl.setText("Nivel 1");
-        }
-        if ((int) AppContext.getInstance().get("level") == 2) {
-            labelLvl.setText("Nivel 2");
-        }
-        if ((int) AppContext.getInstance().get("level") == 3) {
-            labelLvl.setText("Nivel 3");
-        }
-        if ((int) AppContext.getInstance().get("level") == 4) {
-            labelLvl.setText("Nivel 4");
-        }
-        if ((int) AppContext.getInstance().get("level") == 5) {
-            labelLvl.setText("Nivel 5");
-        }
-
-        initialize();
+        game.displayBoard();
     }
 
     private void handleKeyPress(KeyEvent event) {
         switch (event.getCode()) {
             case W:
-                movePlayer(-1, 0);  // Mover hacia arriba
-                game.displayBoard();
-
+                if (game.isValidMove(-1, 0)) {
+                    playerMovements.add(UP);
+                }
+                movePlayer(-1, 0);
                 break;
             case S:
-                movePlayer(1, 0);  // Mover hacia abajo
-                game.displayBoard();
+                if (game.isValidMove(1, 0)) {
+                    playerMovements.add(DOWN);
+                }
+                movePlayer(1, 0);
                 break;
             case A:
-                movePlayer(0, -1);  // Mover hacia la izquierda
-                game.displayBoard();
-
+                if (game.isValidMove(0, -1)) {
+                    playerMovements.add(LEFT);
+                }
+                movePlayer(0, -1);
                 break;
             case D:
-                movePlayer(0, 1);  // Mover hacia la derecha
-                game.displayBoard();
+                if (game.isValidMove(0, 1)) {
+                    playerMovements.add(RIGHT);
+                }
+                movePlayer(0, 1);
+                break;
+            case R:
+                restartLevel();
                 break;
             default:
                 break;
         }
     }
 
-    private void uptadeStats(){
+
+    private void uptadeStats() {
         labelMovements.setText(String.valueOf(movementCounter));
     }
 
@@ -145,21 +149,58 @@ public class LevelsController extends Controller implements Initializable {
             game.movePlayer(rowOffset, colOffset);
             movementCounter++;
             uptadeStats();
-            updateGridPane();  // Actualiza el GridPane después de mover al jugador
-            game.displayBoard();  // Muestra el tablero actualizado en la consola (opcional)
-            if (game.hasWon()) {
-                System.out.println("¡Has ganado!");
-                new Mensaje().showModal(AlertType.INFORMATION, "Nivel Completado", getStage(), "Has completado el nivel");
-                FlowController.getInstance().goView("LevelsSelectorView");
+            updateGridPane();
+            game.displayBoard();
+            if (game.isHasWon()) {
+                game.setIsHasWon(false);
+                restartLevel();
+                resumeLevel();
+//                boolean flag = false;
+//                RepeatLevelConfirmationController repeatLevelConfirmationController = (RepeatLevelConfirmationController) FlowController.getInstance().getController("RepeatLevelConfirmationView");
+//                FlowController.getInstance().goViewInWindowModal("RepeatLevelConfirmationView", ((Stage) root.getScene().getWindow()), true);
+//                flag = (boolean) repeatLevelConfirmationController.getResultConfirmation();
+//                if (flag) {
+//                    System.out.println("¡Has ganado!");
+//                    new Mensaje().showModal(AlertType.INFORMATION, "Nivel Completado", getStage(), "Has completado el nivel");
+//                    FlowController.getInstance().goView("LevelsSelectorView");
+//                } else {
+//                    restartLevel();
+//                    resumeLevel();
+//                }
             }
         }
     }
 
-    private void updateGridPane() {
-        grpLevels.getChildren().clear();
-        loadGridPane();  // Recarga el GridPane con la nueva posición del jugador y cajas
+    public void resumeLevel() {
+        Timeline timeline = new Timeline();
+        timeline.setCycleCount(playerMovements.size());
+
+        timeline.getKeyFrames().add(new KeyFrame(Duration.millis(300), event -> {
+            if (movementCounter < playerMovements.size()) {
+                char c = playerMovements.get(movementCounter);
+                if (c == UP) {
+                    movePlayer(-1, 0);
+                } else if (c == DOWN) {
+                    movePlayer(1, 0);
+                } else if (c == LEFT) {
+                    movePlayer(0, -1);
+                } else if (c == RIGHT) {
+                    movePlayer(0, 1);
+                }
+            }
+        }));
+
+        timeline.play();
     }
 
+    private void updateGridPane() {
+        grpLevels.getChildren().clear();
+        loadGridPane();
+    }
+
+    private void restartLevel() {
+        setUp();
+    }
 
     private void resizeGridPane(int width, int height) {
         grpLevels.getColumnConstraints().clear();
@@ -224,10 +265,9 @@ public class LevelsController extends Controller implements Initializable {
             cargarDatosImagenes("/cr/ac/una/datos/resources/personaje.png", row, col, 50, 60);
         } else if (character == '.') {
             cargarDatosImagenes("/cr/ac/una/datos/resources/checkpoint.png", row, col, 50, 50);
-        }else if(character == '!'){
+        } else if (character == '!') {
             cargarDatosImagenes("/cr/ac/una/datos/resources/boxTexture.png", row, col, 50, 50);
-        }
-        else if (character == '+') {
+        } else if (character == '+') {
             ImageView checkpointView = cargarDatosImagenes("/cr/ac/una/datos/resources/checkpoint.png", row, col, 50, 50);
             checkpointView.setOpacity(0.5);
             ImageView playerView = cargarDatosImagenes("/cr/ac/una/datos/resources/personaje.png", row, col, 50, 60);
@@ -245,21 +285,6 @@ public class LevelsController extends Controller implements Initializable {
         return imageView;
     }
 
-//    public void cargarDatosImagenes(String imagePath, int rowPos, int colPos, Integer imvWidth, Integer imvHeight) {
-//        try {
-//            ImageView imageView = new ImageView();
-//            Image image = new Image(getClass().getResourceAsStream(imagePath));
-//
-//            imageView.setImage(image);
-//            imageView.setFitWidth(imvWidth);
-//            imageView.setFitHeight(imvHeight);
-//            grpLevels.add(imageView, colPos, rowPos);
-//        } catch (Exception e) {
-//            System.err.println("Error al cargar la imagen: " + e.getMessage());
-//            e.printStackTrace();
-//        }
-//    }
-
     public void printBoard() {
         for (List<Character> row : board) {
             for (Character c : row) {
@@ -272,12 +297,10 @@ public class LevelsController extends Controller implements Initializable {
         System.out.println("Ancho: " + width);
     }
 
-
     @FXML
     private void handleSaveAndExit() {
         saveCurrentGame();
         FlowController.getInstance().goView("LevelsSelectorView");
-
     }
 
     private void saveCurrentGame() {

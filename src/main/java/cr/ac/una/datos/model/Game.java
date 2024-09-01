@@ -12,13 +12,13 @@ public class Game {
     private static final char EMPTY = ' ';
     private static final char BOX_ON_GOAL = '!';
     private static final char PLAYER_ON_GOAL = '+';
-
-
     private List<List<Character>> board;
     private int playerRow, playerCol;
+    public boolean hasWon;
 
     public Game(List<List<Character>> board) {
         this.board = board;
+        this.hasWon = false;
         for (int i = 0; i < board.size(); i++) {
             for (int j = 0; j < board.get(i).size(); j++) {
                 char ch = board.get(i).get(j);
@@ -97,14 +97,22 @@ public class Game {
         }
     }
 
-    public boolean hasWon() {
+    public void hasWon() {
+        hasWon = true;
         for (List<Character> row : board) {
             for (char cell : row) {
-                if (cell == BOX) {
-                    return false;
+                if (cell == GOAL || cell == BOX) {
+                    hasWon = false;
                 }
             }
         }
-        return true;
+    }
+
+    public boolean isHasWon() {
+        hasWon();
+        return hasWon;
+    }
+
+    public void setIsHasWon(boolean hasWon) {
     }
 }
