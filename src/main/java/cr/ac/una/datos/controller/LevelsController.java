@@ -232,11 +232,6 @@ public class LevelsController extends Controller implements Initializable {
             checkpointView.setOpacity(0.5);
             ImageView playerView = cargarDatosImagenes("/cr/ac/una/datos/resources/personaje.png", row, col, 50, 60);
         }
-        else if(character == '-'){
-            ImageView checkpointView = cargarDatosImagenes("/cr/ac/una/datos/resources/checkpoint.png", row, col, 50, 50);
-            checkpointView.setOpacity(0.5);
-            ImageView boxView = cargarDatosImagenes("/cr/ac/una/datos/resources/boxTexture.png", row, col, 50, 50);
-        }
     }
 
     public ImageView cargarDatosImagenes(String imagePath, int row, int col, int width, int height) {
