@@ -268,7 +268,8 @@ public class AnimationManager {
         TranslateTransition transition = new TranslateTransition();
         transition.setNode(node);
         transition.setDuration(Duration.seconds(2));
-        transition.setByY(-8);
+        transition.setFromY(0);
+        transition.setToY(-8);
         transition.setAutoReverse(true);
         transition.setCycleCount(TranslateTransition.INDEFINITE);
 
