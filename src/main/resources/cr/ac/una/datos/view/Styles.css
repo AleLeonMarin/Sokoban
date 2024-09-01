@@ -93,7 +93,22 @@
     -fx-faint-focus-color: transparent;
 }
 
+.btnSaveNExit, .btnSaveNExit:pressed, .btnSaveNExit:focused, .btnSaveNExit:hover, .btnSaveNExit:selected, .btnSaveNExit:disabled {
+    -fx-background-image: url("../resources/btnExitandSave.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: contain;
+    -fx-background-position: center;
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-padding: 0;
+    -fx-background-radius: 10;
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+}
 
+.btnSaveNExit:hover {
+    -fx-background-image: url("../resources/btnSaveOpen.png");
+}
 
 .main-backgroundGame {
     -fx-background-color: -fx-game-color;

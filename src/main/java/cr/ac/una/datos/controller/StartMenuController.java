@@ -4,6 +4,8 @@
  */
 package cr.ac.una.datos.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import cr.ac.una.datos.util.AnimationManager;
@@ -14,6 +16,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.image.ImageView;
 import javafx.event.ActionEvent;
+import cr.ac.una.datos.model.Player;
 
 
 import io.github.palexdev.materialfx.controls.MFXButton;
@@ -49,6 +52,7 @@ public class StartMenuController extends Controller implements Initializable{
 
     AnimationManager animationManager = AnimationManager.getInstance();
 
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         animationManager.applyFadeAnimation(imgLogo);
@@ -59,6 +63,7 @@ public class StartMenuController extends Controller implements Initializable{
         }else {
             imgAnimation.setVisible(false);
         }
+
 
     }
 
