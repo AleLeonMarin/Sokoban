@@ -10,6 +10,7 @@ import java.util.ResourceBundle;
 import cr.ac.una.datos.util.AnimationManager;
 import cr.ac.una.datos.util.AppContext;
 import cr.ac.una.datos.util.FlowController;
+import cr.ac.una.datos.model.Player;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -17,6 +18,7 @@ import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
+import javafx.util.Duration;
 
 /**
  * FXML Controller class
@@ -45,6 +47,18 @@ public class LevelsSelectorController extends Controller implements Initializabl
     private ImageView imgLevel5;
 
     @FXML
+    private ImageView imgLock2;
+
+    @FXML
+    private ImageView imgLock3;
+
+    @FXML
+    private ImageView imgLock4;
+
+    @FXML
+    private ImageView imgLock5;
+
+    @FXML
     private Button btnExit;
 
     @FXML
@@ -54,10 +68,12 @@ public class LevelsSelectorController extends Controller implements Initializabl
 
     
     AnimationManager animationManager = AnimationManager.getInstance();
-    
+
     @Override
-    public void initialize(){  
-//        disableCover();
+    public void initialize(){
+
+     setEnviroment();
+
     }
     
     @FXML
@@ -84,7 +100,7 @@ public class LevelsSelectorController extends Controller implements Initializabl
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+
     }
     
 //    private void disableCover(){
@@ -96,6 +112,57 @@ public class LevelsSelectorController extends Controller implements Initializabl
 
     public void onActionBtnExit(ActionEvent event) {
         FlowController.getInstance().goView("StartMenuView");
+    }
+
+    public void setEnviroment(){
+        imgLock2.setVisible(false);
+        imgLock3.setVisible(false);
+        imgLock4.setVisible(false);
+        imgLock5.setVisible(false);
+
+        animationManager.applyFloatingAnimation(imgLock2, Duration.seconds(0.5));
+        animationManager.applyFloatingAnimation(imgLock3, Duration.seconds(1));
+        animationManager.applyFloatingAnimation(imgLock4, Duration.seconds(1.5));
+        animationManager.applyFloatingAnimation(imgLock5, Duration.seconds(2));
+
+        if (Player.getInstance().getLevels() < 1) {
+            imgLevel2.setDisable(true);
+            imgLevel2.setOpacity(0.5);
+            imgLock2.setVisible(true);
+            imgLevel3.setDisable(true);
+            imgLevel3.setOpacity(0.5);
+            imgLock3.setVisible(true);
+            imgLevel4.setDisable(true);
+            imgLevel4.setOpacity(0.5);
+            imgLock4.setVisible(true);
+            imgLevel5.setDisable(true);
+            imgLevel5.setOpacity(0.5);
+            imgLock5.setVisible(true);
+        }
+        else if (Player.getInstance().getLevels() < 2) {
+            imgLevel3.setDisable(true);
+            imgLevel3.setOpacity(0.5);
+            imgLock3.setVisible(true);
+            imgLevel4.setDisable(true);
+            imgLevel4.setOpacity(0.5);
+            imgLock4.setVisible(true);
+            imgLevel5.setDisable(true);
+            imgLevel5.setOpacity(0.5);
+            imgLock5.setVisible(true);
+        }
+        else if (Player.getInstance().getLevels() < 3) {
+            imgLevel4.setDisable(true);
+            imgLevel4.setOpacity(0.5);
+            imgLock4.setVisible(true);
+            imgLevel5.setDisable(true);
+            imgLevel5.setOpacity(0.5);
+            imgLock5.setVisible(true);
+        }
+        else if (Player.getInstance().getLevels() < 4) {
+            imgLevel5.setDisable(true);
+            imgLevel5.setOpacity(0.5);
+            imgLock5.setVisible(true);
+        }
     }
 
 

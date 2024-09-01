@@ -264,6 +264,22 @@ public class AnimationManager {
         });
     }
 
+    public void applyFloatingAnimation(Node node, Duration delay) {
+        TranslateTransition transition = new TranslateTransition();
+        transition.setNode(node);
+        transition.setDuration(Duration.seconds(2));
+        transition.setByY(-8);
+        transition.setAutoReverse(true);
+        transition.setCycleCount(TranslateTransition.INDEFINITE);
+
+        if (delay != null) {
+            PauseTransition pause = new PauseTransition(delay);
+            pause.setOnFinished(event -> transition.play());
+            pause.play();
+        } else {
+            transition.play();
+        }
+    }
 
 
 
