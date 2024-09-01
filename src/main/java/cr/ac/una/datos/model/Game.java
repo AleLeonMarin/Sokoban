@@ -2,6 +2,8 @@ package cr.ac.una.datos.model;
 
 import java.util.List;
 
+import javafx.scene.shape.Box;
+
 public class Game {
     private static final char PLAYER = '@';
     private static final char BOX = '$';
@@ -10,6 +12,7 @@ public class Game {
     private static final char EMPTY = ' ';
     private static final char BOX_ON_GOAL = '!';
     private static final char PLAYER_ON_GOAL = '+';
+    private static final char BOX_OF_GOAL = '-';
 
     private List<List<Character>> board;
     private int playerRow, playerCol;
@@ -74,8 +77,10 @@ public class Game {
         int newCol = playerCol + colOffset;
 
         char destination = board.get(newRow).get(newCol);
+        char ifWasBoxOnGoal = destination;
 
         if (destination == BOX || destination == BOX_ON_GOAL) {
+            ifWasBoxOnGoal = destination;
             int boxNewRow = newRow + rowOffset;
             int boxNewCol = newCol + colOffset;
             board.get(boxNewRow).set(boxNewCol, board.get(boxNewRow).get(boxNewCol) == GOAL ? BOX_ON_GOAL : BOX);
@@ -86,6 +91,10 @@ public class Game {
         playerRow = newRow;
         playerCol = newCol;
         board.get(playerRow).set(playerCol, destination == GOAL ? PLAYER_ON_GOAL : PLAYER);
+
+        if (ifWasBoxOnGoal == BOX_ON_GOAL) {
+            board.get(playerRow).set(playerCol, PLAYER_ON_GOAL);
+        }
     }
 
     public boolean hasWon() {
