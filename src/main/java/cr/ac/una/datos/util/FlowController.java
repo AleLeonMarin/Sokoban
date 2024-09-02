@@ -206,7 +206,7 @@ public class FlowController {
         stage.initModality(Modality.WINDOW_MODAL);
         stage.initOwner(parentStage);
         stage.centerOnScreen();
-        stage.showAndWait();
+       stage.showAndWait();
 
     }
 

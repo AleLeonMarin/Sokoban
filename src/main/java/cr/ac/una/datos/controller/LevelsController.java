@@ -45,7 +45,6 @@ public class LevelsController extends Controller implements Initializable {
     private Game game;
     private List<Character> playerMovements;
 
-
     private final String LEVEL1 = "src/main/resources/cr/ac/una/datos/resources/Levels/level1.txt";
     private final String LEVEL2 = "src/main/resources/cr/ac/una/datos/resources/Levels/level2.txt";
     private final String LEVEL3 = "src/main/resources/cr/ac/una/datos/resources/Levels/level3.txt";
@@ -56,9 +55,7 @@ public class LevelsController extends Controller implements Initializable {
     private final char LEFT = 'l';
     private final char RIGHT = 'r';
 
-
     private int movementCounter = 0;
-
 
     @FXML
     private Text labelLvl;
@@ -70,6 +67,7 @@ public class LevelsController extends Controller implements Initializable {
 
     @Override
     public void initialize() {
+        restartLevel();
     }
 
     @Override
@@ -139,7 +137,6 @@ public class LevelsController extends Controller implements Initializable {
         }
     }
 
-
     private void uptadeStats() {
         labelMovements.setText(String.valueOf(movementCounter));
     }
@@ -153,21 +150,25 @@ public class LevelsController extends Controller implements Initializable {
             game.displayBoard();
             if (game.isHasWon()) {
                 game.setIsHasWon(false);
-                restartLevel();
-                resumeLevel();
-//                boolean flag = false;
-//                RepeatLevelConfirmationController repeatLevelConfirmationController = (RepeatLevelConfirmationController) FlowController.getInstance().getController("RepeatLevelConfirmationView");
-//                FlowController.getInstance().goViewInWindowModal("RepeatLevelConfirmationView", ((Stage) root.getScene().getWindow()), true);
-//                flag = (boolean) repeatLevelConfirmationController.getResultConfirmation();
-//                if (flag) {
-//                    System.out.println("¡Has ganado!");
-//                    new Mensaje().showModal(AlertType.INFORMATION, "Nivel Completado", getStage(), "Has completado el nivel");
-//                    FlowController.getInstance().goView("LevelsSelectorView");
-//                } else {
-//                    restartLevel();
-//                    resumeLevel();
-//                }
+                // Schedule the dialog to be shown after the current animation
+                Platform.runLater(() -> {
+                    FlowController.getInstance().goViewInWindowModal("RepeatLevelConfirmationView",
+                            ((Stage) root.getScene().getWindow()), true);
+                    RepeatLevelConfirmationController repeatLevelConfirmationController = (RepeatLevelConfirmationController) FlowController
+                            .getInstance().getController("RepeatLevelConfirmationView");
+                    boolean newFlag = (boolean) repeatLevelConfirmationController.getResultConfirmation();
+                    if (newFlag) {
+                        System.out.println("¡Has ganado!");
+                        new Mensaje().showModal(AlertType.INFORMATION, "Nivel Completado", getStage(),
+                                "Has completado el nivel");
+                        FlowController.getInstance().goView("LevelsSelectorView");
+                    } else {
+                        restartLevel();
+                        resumeLevel();
+                    }
+                });
             }
+
         }
     }
 
@@ -268,7 +269,8 @@ public class LevelsController extends Controller implements Initializable {
         } else if (character == '!') {
             cargarDatosImagenes("/cr/ac/una/datos/resources/boxTexture.png", row, col, 50, 50);
         } else if (character == '+') {
-            ImageView checkpointView = cargarDatosImagenes("/cr/ac/una/datos/resources/checkpoint.png", row, col, 50, 50);
+            ImageView checkpointView = cargarDatosImagenes("/cr/ac/una/datos/resources/checkpoint.png", row, col, 50,
+                    50);
             checkpointView.setOpacity(0.5);
             ImageView playerView = cargarDatosImagenes("/cr/ac/una/datos/resources/personaje.png", row, col, 50, 60);
         }

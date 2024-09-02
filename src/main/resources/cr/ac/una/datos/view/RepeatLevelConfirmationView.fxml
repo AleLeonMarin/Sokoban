@@ -1,16 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import io.github.palexdev.mfxcore.controls.Label?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-
-<AnchorPane prefHeight="400.0" prefWidth="600.0" styleClass="main-backgroundGame" stylesheets="@Styles.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cr.ac.una.datos.view.RepeatLevelConfirmationController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" styleClass="main-backgroundGame" stylesheets="@Styles.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cr.ac.una.datos.controller.RepeatLevelConfirmationController">
    <children>
       <VBox alignment="CENTER" layoutX="250.0" layoutY="82.0" prefHeight="200.0" prefWidth="100.0">
          <children>
-            <Label text="Desea Continuar?" />
             <Button fx:id="btnRepeatLevelMovements" mnemonicParsing="false" onAction="#btnRepeatLevelMovementsAction" text="Ver resumen de movientos" />
             <Button fx:id="btnContinue" mnemonicParsing="false" onAction="#btnContinueAction" text="Continuar" />
          </children>
