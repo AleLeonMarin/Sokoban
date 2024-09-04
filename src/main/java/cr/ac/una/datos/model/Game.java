@@ -2,8 +2,6 @@ package cr.ac.una.datos.model;
 
 import java.util.List;
 
-import javafx.scene.shape.Box;
-
 public class Game {
     private static final char PLAYER = '@';
     private static final char BOX = '$';
@@ -102,7 +100,7 @@ public class Game {
         hasWon = true;
         for (List<Character> row : board) {
             for (char cell : row) {
-                if (cell == GOAL || cell == BOX) {
+                if (cell == GOAL || cell == PLAYER_ON_GOAL) {
                     hasWon = false;
                 }
             }
