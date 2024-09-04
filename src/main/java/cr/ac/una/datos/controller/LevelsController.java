@@ -3,8 +3,24 @@ package cr.ac.una.datos.controller;
 import cr.ac.una.datos.model.Game;
 import cr.ac.una.datos.util.AppContext;
 import cr.ac.una.datos.util.FlowController;
-import cr.ac.una.datos.util.Formato;
 import cr.ac.una.datos.util.Mensaje;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.RowConstraints;
+import javafx.scene.layout.StackPane;
+import javafx.scene.text.Text;
+import javafx.stage.Stage;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.util.Duration;
+import javafx.application.Platform;
 
 import java.io.*;
 import java.net.URL;
@@ -12,186 +28,164 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import javafx.application.Platform;
-import javafx.concurrent.Task;
-import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.Button;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.RowConstraints;
-import javafx.scene.layout.StackPane;
-import javafx.scene.text.Text;
-import javafx.stage.Stage;
-import javafx.scene.input.KeyEvent;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
-import javafx.util.Duration;
-
 public class LevelsController extends Controller implements Initializable {
 
     @FXML
     private GridPane grpLevels;
     @FXML
     private StackPane root;
+    @FXML
+    private Text labelLvl;
+    @FXML
+    private Text labelMovements;
+    @FXML
+    private Button btnSaveAndExit;
+
     private Integer width = 0;
     private Integer height = 0;
     private List<List<Character>> board;
     private Integer gridPaneColumnWidth = 55;
     private Integer gridPaneRowHeight = 55;
     private Game game;
-    private List<Character> playerMovements;
-
-    private final String LEVEL1 = "src/main/resources/cr/ac/una/datos/resources/Levels/level1.txt";
-    private final String LEVEL2 = "src/main/resources/cr/ac/una/datos/resources/Levels/level2.txt";
-    private final String LEVEL3 = "src/main/resources/cr/ac/una/datos/resources/Levels/level3.txt";
-    private final String LEVEL4 = "src/main/resources/cr/ac/una/datos/resources/Levels/level4.txt";
-    private final String LEVEL5 = "src/main/resources/cr/ac/una/datos/resources/Levels/level5.txt";
-    private final char UP = 'u';
-    private final char DOWN = 'd';
-    private final char LEFT = 'l';
-    private final char RIGHT = 'r';
-
+    private List<Character> playerMovements = new ArrayList<>();
     private int movementCounter = 0;
 
-    @FXML
-    private Text labelLvl;
-    @FXML
-    private Text labelMovements;
-
-    @FXML
-    private Button btnSaveAndExit;
-
-    @Override
-    public void initialize() {
-        restartLevel();
-    }
+    private static final String LEVELS_PATH = "src/main/resources/cr/ac/una/datos/resources/Levels/level";
+    private static final int LEVEL_COUNT = 5;
+    private static final char UP = 'u';
+    private static final char DOWN = 'd';
+    private static final char LEFT = 'l';
+    private static final char RIGHT = 'r';
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        this.playerMovements = new ArrayList<>();
         grpLevels.setFocusTraversable(true);
         grpLevels.setOnKeyPressed(this::handleKeyPress);
-        setUp();
+        setUpLevel();
     }
 
-    private void setUp() {
-        if ((int) AppContext.getInstance().get("level") == 1) {
-            loadBoardFromFile(LEVEL1);
-            labelLvl.setText("Nivel 1");
-        } else if ((int) AppContext.getInstance().get("level") == 2) {
-            loadBoardFromFile(LEVEL2);
-            labelLvl.setText("Nivel 2");
-        } else if ((int) AppContext.getInstance().get("level") == 3) {
-            loadBoardFromFile(LEVEL3);
-            labelLvl.setText("Nivel 3");
-        } else if ((int) AppContext.getInstance().get("level") == 4) {
-            loadBoardFromFile(LEVEL4);
-            labelLvl.setText("Nivel 4");
-        } else if ((int) AppContext.getInstance().get("level") == 5) {
-            loadBoardFromFile(LEVEL5);
-            labelLvl.setText("Nivel 5");
-        }
+    @Override
+    public void initialize() {
+        grpLevels.setFocusTraversable(true);
+        grpLevels.setOnKeyPressed(this::handleKeyPress);
+        setUpLevel();
+    }
 
+    private void setUpLevel() {
+        int level = (int) AppContext.getInstance().get("level");
+        if (level >= 1 && level <= LEVEL_COUNT) {
+            loadBoardFromFile(LEVELS_PATH + level + ".txt");
+            labelLvl.setText("Nivel " + level);
+        }
         resizeGridPane(width, height);
         loadGridPane();
         game = new Game(board);
         movementCounter = 0;
+        updateLabelMovements();
         game.displayBoard();
     }
 
     private void handleKeyPress(KeyEvent event) {
         switch (event.getCode()) {
             case W:
-                if (game.isValidMove(-1, 0)) {
-                    playerMovements.add(UP);
-                }
-                movePlayer(-1, 0);
+                movePlayer(-1, 0, UP);
                 break;
             case S:
-                if (game.isValidMove(1, 0)) {
-                    playerMovements.add(DOWN);
-                }
-                movePlayer(1, 0);
+                movePlayer(1, 0, DOWN);
                 break;
             case A:
-                if (game.isValidMove(0, -1)) {
-                    playerMovements.add(LEFT);
-                }
-                movePlayer(0, -1);
+                movePlayer(0, -1, LEFT);
                 break;
             case D:
-                if (game.isValidMove(0, 1)) {
-                    playerMovements.add(RIGHT);
-                }
-                movePlayer(0, 1);
+                movePlayer(0, 1, RIGHT);
                 break;
             case R:
-                restartLevel();
+                setUpLevel();
+                this.playerMovements.clear();
                 break;
             default:
                 break;
         }
     }
 
-    private void uptadeStats() {
-        labelMovements.setText(String.valueOf(movementCounter));
-    }
-
-    private void movePlayer(int rowOffset, int colOffset) {
+    private void movePlayer(int rowOffset, int colOffset, char direction) {
         if (game.isValidMove(rowOffset, colOffset)) {
+            playerMovements.add(direction);
             game.movePlayer(rowOffset, colOffset);
             movementCounter++;
-            uptadeStats();
+            updateLabelMovements();
             updateGridPane();
-            game.displayBoard();
             if (game.isHasWon()) {
-                game.setIsHasWon(false);
-                // Schedule the dialog to be shown after the current animation
-                Platform.runLater(() -> {
-                    FlowController.getInstance().goViewInWindowModal("RepeatLevelConfirmationView",
-                            ((Stage) root.getScene().getWindow()), true);
-                    RepeatLevelConfirmationController repeatLevelConfirmationController = (RepeatLevelConfirmationController) FlowController
-                            .getInstance().getController("RepeatLevelConfirmationView");
-                    boolean newFlag = (boolean) repeatLevelConfirmationController.getResultConfirmation();
-                    if (newFlag) {
-                        System.out.println("¡Has ganado!");
-                        new Mensaje().showModal(AlertType.INFORMATION, "Nivel Completado", getStage(),
-                                "Has completado el nivel");
-                        FlowController.getInstance().goView("LevelsSelectorView");
-                    } else {
-                        restartLevel();
-                        resumeLevel();
-                    }
-                });
+                handleLevelCompletion();
             }
-
         }
     }
 
-    public void resumeLevel() {
+    private void updateLabelMovements() {
+        labelMovements.setText(String.valueOf(movementCounter));
+    }
+
+    private void handleLevelCompletion() {
+        game.setIsHasWon(false);
+
+        Platform.runLater(() -> {
+            FlowController.getInstance().goViewInWindowModal("RepeatLevelConfirmationView",
+                    ((Stage) root.getScene().getWindow()), true);
+            RepeatLevelConfirmationController repeatLevelConfirmationController = (RepeatLevelConfirmationController) FlowController
+                    .getInstance().getController("RepeatLevelConfirmationView");
+            boolean newFlag = (boolean) repeatLevelConfirmationController.getResultConfirmation();
+            if (newFlag) {
+                setUpLevel();
+                this.playerMovements.clear();
+                new Mensaje().showModal(AlertType.INFORMATION, "Nivel Completado", getStage(), "Has completado el nivel");
+                FlowController.getInstance().goView("LevelsSelectorView");
+            } else {
+                setUpLevel();
+                resumeLevel();
+            }
+        });
+    }
+
+
+    private void resumeLevel() {
         Timeline timeline = new Timeline();
         timeline.setCycleCount(playerMovements.size());
 
-        timeline.getKeyFrames().add(new KeyFrame(Duration.millis(300), event -> {
-            if (movementCounter < playerMovements.size()) {
-                char c = playerMovements.get(movementCounter);
-                if (c == UP) {
-                    movePlayer(-1, 0);
-                } else if (c == DOWN) {
-                    movePlayer(1, 0);
-                } else if (c == LEFT) {
-                    movePlayer(0, -1);
-                } else if (c == RIGHT) {
-                    movePlayer(0, 1);
-                }
-            }
-        }));
+        KeyFrame keyFrame = new KeyFrame(
+                Duration.millis(500),
+                event -> {
 
+                    char character = playerMovements.get(movementCounter);
+                    if (character == UP)
+                        movePlayerRepetitions(-1, 0);
+                    else if (character == DOWN)
+                        movePlayerRepetitions(1, 0);
+                    else if (character == LEFT)
+                        movePlayerRepetitions(0, -1);
+                    else if (character == RIGHT)
+                        movePlayerRepetitions(0, 1);
+
+                    movementCounter++;
+                }
+        );
+
+        timeline.getKeyFrames().add(keyFrame);
         timeline.play();
+
+        timeline.setOnFinished(event -> {
+            movementCounter = 0;
+        });
+    }
+
+
+    private void movePlayerRepetitions(int rowOffset, int colOffset) {
+        game.movePlayer(rowOffset, colOffset);
+        updateLabelMovements();
+        updateGridPane();
+        game.displayBoard();
+        if (game.isHasWon()) {
+            handleLevelCompletion();
+        }
     }
 
     private void updateGridPane() {
@@ -199,23 +193,16 @@ public class LevelsController extends Controller implements Initializable {
         loadGridPane();
     }
 
-    private void restartLevel() {
-        setUp();
-    }
-
     private void resizeGridPane(int width, int height) {
         grpLevels.getColumnConstraints().clear();
         grpLevels.getRowConstraints().clear();
         grpLevels.getChildren().clear();
-
         for (int col = 0; col < width; col++) {
             grpLevels.getColumnConstraints().add(new ColumnConstraints(gridPaneColumnWidth));
         }
         for (int row = 0; row < height; row++) {
             grpLevels.getRowConstraints().add(new RowConstraints(gridPaneRowHeight));
         }
-        System.out.println("Tamaño de gridpane en row: " + grpLevels.getRowCount());
-        System.out.println("Tamaño de gridpane columnas: " + grpLevels.getColumnCount());
     }
 
     private void loadBoardFromFile(String filePath) {
@@ -230,19 +217,13 @@ public class LevelsController extends Controller implements Initializable {
             }
             height = lines.size();
             board = new ArrayList<>();
-
             for (String l : lines) {
                 List<Character> row = new ArrayList<>();
                 for (int j = 0; j < width; j++) {
-                    if (j < l.length()) {
-                        row.add(l.charAt(j));
-                    } else {
-                        row.add(' ');
-                    }
+                    row.add(j < l.length() ? l.charAt(j) : ' ');
                 }
                 board.add(row);
             }
-
             printBoard();
         } catch (IOException e) {
             e.printStackTrace();
@@ -258,21 +239,29 @@ public class LevelsController extends Controller implements Initializable {
     }
 
     public void identifyBlocks(char character, int row, int col) {
-        if (character == '#') {
-            cargarDatosImagenes("/cr/ac/una/datos/resources/blockTexture.png", row, col, 50, 50);
-        } else if (character == '$') {
-            cargarDatosImagenes("/cr/ac/una/datos/resources/boxTexture.png", row, col, 50, 50);
-        } else if (character == '@') {
-            cargarDatosImagenes("/cr/ac/una/datos/resources/personaje.png", row, col, 50, 60);
-        } else if (character == '.') {
-            cargarDatosImagenes("/cr/ac/una/datos/resources/checkpoint.png", row, col, 50, 50);
-        } else if (character == '!') {
-            cargarDatosImagenes("/cr/ac/una/datos/resources/boxTexture.png", row, col, 50, 50);
-        } else if (character == '+') {
-            ImageView checkpointView = cargarDatosImagenes("/cr/ac/una/datos/resources/checkpoint.png", row, col, 50,
-                    50);
-            checkpointView.setOpacity(0.5);
-            ImageView playerView = cargarDatosImagenes("/cr/ac/una/datos/resources/personaje.png", row, col, 50, 60);
+        switch (character) {
+            case '#':
+                cargarDatosImagenes("/cr/ac/una/datos/resources/blockTexture.png", row, col, 50, 50);
+                break;
+            case '$':
+                cargarDatosImagenes("/cr/ac/una/datos/resources/boxTexture.png", row, col, 50, 50);
+                break;
+            case '@':
+                cargarDatosImagenes("/cr/ac/una/datos/resources/personaje.png", row, col, 50, 50);
+                break;
+            case '.':
+                cargarDatosImagenes("/cr/ac/una/datos/resources/checkpoint.png", row, col, 50, 50);
+                break;
+            case '!':
+                cargarDatosImagenes("/cr/ac/una/datos/resources/boxTexture.png", row, col, 50, 50);
+                break;
+            case '+':
+                ImageView checkpointView = cargarDatosImagenes("/cr/ac/una/datos/resources/checkpoint.png", row, col, 50, 50);
+                checkpointView.setOpacity(0.5);
+                cargarDatosImagenes("/cr/ac/una/datos/resources/personaje.png", row, col, 50, 50);
+                break;
+            default:
+                break;
         }
     }
 
@@ -281,20 +270,15 @@ public class LevelsController extends Controller implements Initializable {
         ImageView imageView = new ImageView(image);
         imageView.setFitWidth(width);
         imageView.setFitHeight(height);
-
         grpLevels.add(imageView, col, row);
-
         return imageView;
     }
 
     public void printBoard() {
-        for (List<Character> row : board) {
-            for (Character c : row) {
-                System.out.print(c);
-            }
+        board.forEach(row -> {
+            row.forEach(System.out::print);
             System.out.println();
-        }
-
+        });
         System.out.println("Altura: " + height);
         System.out.println("Ancho: " + width);
     }
@@ -306,26 +290,25 @@ public class LevelsController extends Controller implements Initializable {
     }
 
     private void saveCurrentGame() {
-        String saveDirectoryPath = "src/main/resources/cr/ac/una/datos/resources/Levels/saved_levels";
-        File directory = new File(saveDirectoryPath);
-        if (!directory.exists()) {
-            directory.mkdirs();
-        }
-
-        String saveFilePath = saveDirectoryPath + "/saved_game.txt";
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(saveFilePath))) {
-            for (List<Character> row : board) {
-                for (Character ch : row) {
-                    writer.write(ch);
-                }
-                writer.newLine();
+        String saveDirectoryPath = "src/main/resources/cr/ac/una/datos/resources/Levels/savedGame.txt";
+        File saveDirectory = new File(saveDirectoryPath);
+        if (!saveDirectory.exists()) {
+            try {
+                saveDirectory.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-            System.out.println("Partida guardada en: " + saveFilePath);
+        }
+        try (FileWriter fileWriter = new FileWriter(saveDirectoryPath);
+             PrintWriter printWriter = new PrintWriter(fileWriter)) {
+            printWriter.println(labelLvl.getText());
+            printWriter.println(labelMovements.getText());
+            for (Character movement : playerMovements) {
+                printWriter.print(movement);
+            }
         } catch (IOException e) {
-            System.err.println("Error al guardar la partida: " + e.getMessage());
             e.printStackTrace();
         }
-
     }
 
 }

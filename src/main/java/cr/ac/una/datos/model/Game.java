@@ -95,6 +95,7 @@ public class Game {
         if (ifWasBoxOnGoal == BOX_ON_GOAL) {
             board.get(playerRow).set(playerCol, PLAYER_ON_GOAL);
         }
+        displayBoard();
     }
 
     public void hasWon() {

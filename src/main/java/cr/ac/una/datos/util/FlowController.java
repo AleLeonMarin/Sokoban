@@ -7,10 +7,12 @@ package cr.ac.una.datos.util;
 
 import cr.ac.una.datos.App;
 import cr.ac.una.datos.controller.Controller;
+
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
+
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -91,7 +93,7 @@ public class FlowController {
         return loader;
     }
 
-   public void goMain() {
+    public void goMain() {
         try {
             this.mainStage.setScene(
 
@@ -206,7 +208,7 @@ public class FlowController {
         stage.initModality(Modality.WINDOW_MODAL);
         stage.initOwner(parentStage);
         stage.centerOnScreen();
-       stage.showAndWait();
+        stage.showAndWait();
 
     }
 
