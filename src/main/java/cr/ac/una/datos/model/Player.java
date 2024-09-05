@@ -5,12 +5,14 @@ import java.io.*;
 public class Player {
     private String name;
     private int levels;
+    private int nivelActual;
 
     private static Player instance;
 
     private Player(String name, int levels) {
         this.name = name;
         this.levels = levels;
+        this.nivelActual = 0;
     }
 
     public static Player getInstance() {
@@ -18,18 +20,23 @@ public class Player {
             instance = new Player("DefaultPlayer", 0);
             instance.loadData();
         }
-
         return instance;
     }
 
     public String getName() {
-        //loadData();
         return name;
     }
 
     public int getLevels() {
-       // loadData();
         return levels;
+    }
+
+    public int getNivelActual() {
+        return nivelActual;
+    }
+
+    public void setNivelActual(int nivelActual) {
+        this.nivelActual = nivelActual;
     }
 
     public void setName(String name) {
@@ -44,11 +51,18 @@ public class Player {
         saveData();
     }
 
+   
     public void incrementarNivel() {
         System.out.println("Niveles anteriores: " + this.levels);
-        this.levels++;  // Incrementar el nivel en 1
-        System.out.println("Nuevos niveles: " + this.levels);
-        saveData();
+
+        // Solo incrementar si el jugador ha completado el nivel mas alto desbloqueado
+        if (nivelActual == levels) {
+            this.levels++;  // Desbloquea el siguiente nivel
+            System.out.println("Nuevos niveles: " + this.levels);
+            saveData();
+        } else {
+            System.out.println("No se puede desbloquear el siguiente nivel hasta que se complete el nivel actual.");
+        }
     }
 
     // Cargar datos desde el archivo

@@ -75,29 +75,30 @@ public class LevelsSelectorController extends Controller implements Initializabl
         setEnviroment();
 
     }
-    
+
     @FXML
     void onMouseClicked(MouseEvent event) {
         if (event.getSource().equals(imgLevel1)) {
             AppContext.getInstance().set("level", 1);
-        }
-        else if (event.getSource().equals(imgLevel2)) {
+            Player.getInstance().setNivelActual(0);
+        } else if (event.getSource().equals(imgLevel2)) {
             AppContext.getInstance().set("level", 2);
-            System.out.println("Level 2");
-        }
-        else if (event.getSource().equals(imgLevel3)) {
+            Player.getInstance().setNivelActual(1);
+        } else if (event.getSource().equals(imgLevel3)) {
             AppContext.getInstance().set("level", 3);
-        }
-       else if (event.getSource().equals(imgLevel4)) {
+            Player.getInstance().setNivelActual(2);
+        } else if (event.getSource().equals(imgLevel4)) {
             AppContext.getInstance().set("level", 4);
+            Player.getInstance().setNivelActual(3);
+        } else if (event.getSource().equals(imgLevel5)) {
+            AppContext.getInstance().set("level", 5);
+            Player.getInstance().setNivelActual(4);
         }
-       else if (event.getSource().equals(imgLevel5)) {
-           AppContext.getInstance().set("level", 5);
-       }
 
         FlowController.getInstance().goView("LevelsView");
     }
-    
+
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
