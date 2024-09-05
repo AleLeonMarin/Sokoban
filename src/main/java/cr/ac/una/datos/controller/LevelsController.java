@@ -130,7 +130,7 @@ public class LevelsController extends Controller implements Initializable {
 
         Platform.runLater(() -> {
             FlowController.getInstance().goViewInWindowModal("RepeatLevelConfirmationView",
-                    ((Stage) root.getScene().getWindow()), true);
+                    ((Stage) root.getScene().getWindow()), false);
             RepeatLevelConfirmationController repeatLevelConfirmationController = (RepeatLevelConfirmationController) FlowController
                     .getInstance().getController("RepeatLevelConfirmationView");
             boolean newFlag = (boolean) repeatLevelConfirmationController.getResultConfirmation();

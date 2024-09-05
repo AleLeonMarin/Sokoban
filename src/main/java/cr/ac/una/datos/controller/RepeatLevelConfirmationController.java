@@ -1,5 +1,7 @@
 package cr.ac.una.datos.controller;
 
+import cr.ac.una.datos.model.Player;
+import cr.ac.una.datos.util.AppContext;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -22,6 +24,10 @@ public class RepeatLevelConfirmationController extends Controller implements Ini
     @FXML
     void btnContinueAction(ActionEvent event) {
         resultConfirmation = true;
+
+
+        Player.getInstance().incrementarNivel();
+
         Stage stage = (Stage) btnContinue.getScene().getWindow();
         stage.close();
     }

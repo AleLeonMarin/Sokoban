@@ -18,14 +18,17 @@ public class Player {
             instance = new Player("DefaultPlayer", 0);
             instance.loadData();
         }
+
         return instance;
     }
 
     public String getName() {
+        //loadData();
         return name;
     }
 
     public int getLevels() {
+       // loadData();
         return levels;
     }
 
@@ -35,7 +38,16 @@ public class Player {
     }
 
     public void setLevels(int levels) {
+        System.out.println("Niveles anteriores: " + this.levels);
         this.levels = levels;
+        System.out.println("Nuevos niveles: " + this.levels);
+        saveData();
+    }
+
+    public void incrementarNivel() {
+        System.out.println("Niveles anteriores: " + this.levels);
+        this.levels++;  // Incrementar el nivel en 1
+        System.out.println("Nuevos niveles: " + this.levels);
         saveData();
     }
 
@@ -67,6 +79,10 @@ public class Player {
 
     // Escribir datos en el archivo
     private void writeData(String filePath) {
+        System.out.println("Guardando datos en el archivo...");
+        System.out.println("Name: " + this.name);
+        System.out.println("Levels: " + this.levels);
+
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
             writer.write("Name: " + this.name);
             writer.newLine();

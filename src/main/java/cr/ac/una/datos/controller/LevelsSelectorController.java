@@ -71,8 +71,8 @@ public class LevelsSelectorController extends Controller implements Initializabl
 
     @Override
     public void initialize(){
-
-     setEnviroment();
+        Player.getInstance().loadData();
+        setEnviroment();
 
     }
     
@@ -112,9 +112,13 @@ public class LevelsSelectorController extends Controller implements Initializabl
 
     public void onActionBtnExit(ActionEvent event) {
         FlowController.getInstance().goView("StartMenuView");
+        Player.getInstance().loadData();
     }
 
     public void setEnviroment(){
+
+        Player.getInstance().loadData();
+
         imgLock2.setVisible(false);
         imgLock3.setVisible(false);
         imgLock4.setVisible(false);
@@ -133,13 +137,15 @@ public class LevelsSelectorController extends Controller implements Initializabl
             imgLevel3.setOpacity(0.5);
             imgLock3.setVisible(true);
             imgLevel4.setDisable(true);
-            imgLevel4.setOpacity(0.5);
+            imgLevel2.setOpacity(0.5);
             imgLock4.setVisible(true);
             imgLevel5.setDisable(true);
             imgLevel5.setOpacity(0.5);
             imgLock5.setVisible(true);
         }
         else if (Player.getInstance().getLevels() < 2) {
+            imgLevel2.setOpacity(1);
+            imgLevel2.setDisable(false);
             imgLevel3.setDisable(true);
             imgLevel3.setOpacity(0.5);
             imgLock3.setVisible(true);
@@ -151,6 +157,8 @@ public class LevelsSelectorController extends Controller implements Initializabl
             imgLock5.setVisible(true);
         }
         else if (Player.getInstance().getLevels() < 3) {
+            imgLevel3.setOpacity(1);
+            imgLevel3.setDisable(false);
             imgLevel4.setDisable(true);
             imgLevel4.setOpacity(0.5);
             imgLock4.setVisible(true);
@@ -159,9 +167,15 @@ public class LevelsSelectorController extends Controller implements Initializabl
             imgLock5.setVisible(true);
         }
         else if (Player.getInstance().getLevels() < 4) {
+            imgLevel4.setOpacity(1);
+            imgLevel4.setDisable(false);
             imgLevel5.setDisable(true);
             imgLevel5.setOpacity(0.5);
             imgLock5.setVisible(true);
+        }
+        else if (Player.getInstance().getLevels() < 5) {
+            imgLevel5.setOpacity(1);
+            imgLevel5.setDisable(false);
         }
     }
 

@@ -31,6 +31,15 @@
     -fx-background-position: center center;
 }
 
+
+.repeat-background {
+    -fx-background-color: #f0f0f0;
+    -fx-background-image: url("../resources/repeatLevelsBk.jpg");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+    -fx-background-position: center center;
+}
+
 .levels-background {
     -fx-background-color: #f0f0f0;
     -fx-background-image: url("../resources/levelsView.jpg");
@@ -105,6 +114,34 @@
     -fx-focus-color: transparent;
     -fx-faint-focus-color: transparent;
 }
+
+.btnResume, .btnResume:pressed, .btnResume:focused, .btnResume:hover, .btnResume:selected, .btnResume:disabled {
+    -fx-background-image: url("../resources/btnMovementResume.jpg");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: contain;
+    -fx-background-position: center;
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-padding: 0;
+    -fx-background-radius: 10;
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+}
+
+.btnContinue, .btnContinue:pressed, .btnContinue:focused, .btnContinue:hover, .btnContinue:selected, .btnContinue:disabled {
+    -fx-background-image: url("../resources/btnContinue.jpg");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: contain;
+    -fx-background-position: center;
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-padding: 0;
+    -fx-background-radius: 10;
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+}
+
+
 
 .btnSaveNExit:hover {
     -fx-background-image: url("../resources/btnSaveOpen.png");
