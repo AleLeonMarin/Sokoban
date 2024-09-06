@@ -112,6 +112,8 @@ public class Game {
         return hasWon;
     }
 
-    public void setIsHasWon(boolean hasWon) {
+    public void setIsHasWon(boolean value) {
+        this.hasWon = value;
     }
+
 }

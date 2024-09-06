@@ -39,22 +39,7 @@ public class SavedLevelsController extends Controller implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        colLevelName.setCellValueFactory(new PropertyValueFactory<>("name"));
-        colDateSaved.setCellValueFactory(new PropertyValueFactory<>("date"));
 
-        tbvSavedLevels.getSelectionModel().selectedItemProperty()
-                .addListener((ObservableValue<? extends SavedLevel> observable, SavedLevel oldValue,
-                        SavedLevel newValue) -> {
-                    if (newValue != null) {
-                        // Obtiene el jugador seleccionado en la tabla
-                        this.saved = newValue;
-                    }
-                });
-
-        loadSavedLevels();
-
-        // Add double-click event handler
-        tbvSavedLevels.setOnMouseClicked(this::handleTableClick);
     }
 
     private void handleTableClick(MouseEvent event) {
@@ -83,7 +68,7 @@ public class SavedLevelsController extends Controller implements Initializable {
         ObservableList<SavedLevel> levels = FXCollections.observableArrayList();
 
         // Cargar los datos desde los archivos
-        File folder = new File("src/main/resources/cr/ac/una/datos/resources/Levels/saved_levels");
+        File folder = new File("src/main/resources/cr/ac/una/datos/resources/Levels/saved_levels/savedGame.txt");
         File[] listOfFiles = folder.listFiles();
 
         if (listOfFiles != null) {
@@ -99,6 +84,21 @@ public class SavedLevelsController extends Controller implements Initializable {
 
     @Override
     public void initialize() {
-        // TODO Auto-generated method stub
+        colLevelName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        colDateSaved.setCellValueFactory(new PropertyValueFactory<>("date"));
+
+        tbvSavedLevels.getSelectionModel().selectedItemProperty()
+                .addListener((ObservableValue<? extends SavedLevel> observable, SavedLevel oldValue,
+                              SavedLevel newValue) -> {
+                    if (newValue != null) {
+                        // Obtiene el jugador seleccionado en la tabla
+                        this.saved = newValue;
+                    }
+                });
+
+        loadSavedLevels();
+
+        // Add double-click event handler
+        tbvSavedLevels.setOnMouseClicked(this::handleTableClick);
     }
 }

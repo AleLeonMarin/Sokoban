@@ -1,2 +1,2 @@
 Name: DefaultPlayer
-Levels: 0
+Levels: 5

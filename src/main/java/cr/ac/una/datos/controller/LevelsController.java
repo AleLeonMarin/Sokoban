@@ -148,11 +148,13 @@ public class LevelsController extends Controller implements Initializable {
 
 
     private void resumeLevel() {
+        grpLevels.setOnKeyPressed(null);
+
         Timeline timeline = new Timeline();
         timeline.setCycleCount(playerMovements.size());
 
         KeyFrame keyFrame = new KeyFrame(
-                Duration.millis(500),
+                Duration.millis(220),
                 event -> {
 
                     char character = playerMovements.get(movementCounter);
@@ -174,6 +176,8 @@ public class LevelsController extends Controller implements Initializable {
 
         timeline.setOnFinished(event -> {
             movementCounter = 0;
+
+            grpLevels.setOnKeyPressed(this::handleKeyPress);
         });
     }
 
@@ -290,7 +294,7 @@ public class LevelsController extends Controller implements Initializable {
     }
 
     private void saveCurrentGame() {
-        String saveDirectoryPath = "src/main/resources/cr/ac/una/datos/resources/Levels/savedGame.txt";
+        String saveDirectoryPath = "src/main/resources/cr/ac/una/datos/resources/Levels/saved_levels";
         File saveDirectory = new File(saveDirectoryPath);
         if (!saveDirectory.exists()) {
             try {
