@@ -72,10 +72,14 @@ public class LevelsController extends Controller implements Initializable {
     }
 
     private void setUpLevel() {
-        int level = (int) AppContext.getInstance().get("level");
-        if (level >= 1 && level <= LEVEL_COUNT) {
+        Object levelObj = AppContext.getInstance().get("level");
+        if (levelObj instanceof Integer) {
+            int level = (Integer) levelObj;
             loadBoardFromFile(LEVELS_PATH + level + ".txt");
             labelLvl.setText("Nivel " + level);
+        } else if (levelObj instanceof String) {
+            // Si es un String (cuando es un nivel guardado)
+            loadSavedGame((String) levelObj);
         }
         resizeGridPane(width, height);
         loadGridPane();
@@ -84,6 +88,8 @@ public class LevelsController extends Controller implements Initializable {
         updateLabelMovements();
         game.displayBoard();
     }
+
+
 
     private void handleKeyPress(KeyEvent event) {
         switch (event.getCode()) {
@@ -213,6 +219,8 @@ public class LevelsController extends Controller implements Initializable {
         List<String> lines = new ArrayList<>();
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
             String line;
+            width = 0;
+            height = 0;
             while ((line = br.readLine()) != null) {
                 lines.add(line);
                 if (line.length() > width) {
@@ -221,18 +229,24 @@ public class LevelsController extends Controller implements Initializable {
             }
             height = lines.size();
             board = new ArrayList<>();
+
             for (String l : lines) {
                 List<Character> row = new ArrayList<>();
                 for (int j = 0; j < width; j++) {
-                    row.add(j < l.length() ? l.charAt(j) : ' ');
+                    row.add(j < l.length() ? l.charAt(j) : ' ');  // Agregar espacios vacíos si es necesario
                 }
                 board.add(row);
             }
+
             printBoard();
+
         } catch (IOException e) {
             e.printStackTrace();
         }
+        updateGridPane();
     }
+
+
 
     public void loadGridPane() {
         for (int row = 0; row < height; row++) {
@@ -279,13 +293,17 @@ public class LevelsController extends Controller implements Initializable {
     }
 
     public void printBoard() {
-        board.forEach(row -> {
-            row.forEach(System.out::print);
+        for (List<Character> row : board) {
+            for (Character c : row) {
+                System.out.print(c);
+            }
             System.out.println();
-        });
+        }
+
         System.out.println("Altura: " + height);
         System.out.println("Ancho: " + width);
     }
+
 
     @FXML
     private void handleSaveAndExit() {
@@ -293,26 +311,60 @@ public class LevelsController extends Controller implements Initializable {
         FlowController.getInstance().goView("LevelsSelectorView");
     }
 
+    private void loadSavedGame(int level) {
+        String filePath = "src/main/resources/cr/ac/una/datos/resources/Levels/saved_levels/saved_level_" + level + ".txt";
+        loadBoardFromFile(filePath);
+    }
+
     private void saveCurrentGame() {
         String saveDirectoryPath = "src/main/resources/cr/ac/una/datos/resources/Levels/saved_levels";
         File saveDirectory = new File(saveDirectoryPath);
         if (!saveDirectory.exists()) {
-            try {
-                saveDirectory.createNewFile();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            saveDirectory.mkdirs();
         }
-        try (FileWriter fileWriter = new FileWriter(saveDirectoryPath);
+
+
+        Object levelObj = AppContext.getInstance().get("level");
+        String fileName;
+
+        if (levelObj instanceof Integer) {
+            int level = (Integer) levelObj;
+            fileName = "saved_level_" + level + ".txt";
+        } else if (levelObj instanceof String) {
+            fileName = (String) levelObj;
+        } else {
+            throw new IllegalArgumentException("El nivel en AppContext no es ni un entero ni un string.");
+        }
+
+        File saveFile = new File(saveDirectory, fileName);
+
+        try (FileWriter fileWriter = new FileWriter(saveFile);
              PrintWriter printWriter = new PrintWriter(fileWriter)) {
-            printWriter.println(labelLvl.getText());
-            printWriter.println(labelMovements.getText());
-            for (Character movement : playerMovements) {
-                printWriter.print(movement);
+
+            for (List<Character> row : board) {
+                for (Character cell : row) {
+                    printWriter.print(cell);
+                }
+                printWriter.println();
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
+    public void loadSavedGame(String fileName) {
+        String filePath = "src/main/resources/cr/ac/una/datos/resources/Levels/saved_levels/" + fileName;
+        loadBoardFromFile(filePath);
+        updateGridPane();
+    }
+
+
+
+
+
+
+
+
 }
+
+

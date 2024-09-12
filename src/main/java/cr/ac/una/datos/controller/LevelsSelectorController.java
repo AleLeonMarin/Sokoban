@@ -64,7 +64,7 @@ public class LevelsSelectorController extends Controller implements Initializabl
     @FXML
     private StackPane root;
 
-    private Runnable onFinishOut;
+
 
     
     AnimationManager animationManager = AnimationManager.getInstance();
@@ -103,13 +103,6 @@ public class LevelsSelectorController extends Controller implements Initializabl
     public void initialize(URL url, ResourceBundle rb) {
 
     }
-    
-//    private void disableCover(){
-////         onFinishOut = () -> {
-////            imgCover1.setDisable(true);
-////        };
-////        animationManager.animarFadeOut(imgCover1, onFinishOut);
-////    }
 
     public void onActionBtnExit(ActionEvent event) {
         FlowController.getInstance().goView("StartMenuView");
