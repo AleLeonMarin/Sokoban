@@ -31,7 +31,10 @@
             <Insets left="10.0" />
          </StackPane.margin>
       </ImageView>
-      <ImageView fx:id="imgLevel4" fitHeight="127.0" fitWidth="154.0" onMouseClicked="#onMouseClicked" pickOnBounds="true" preserveRatio="true" translateX="205.0" />
+      <ImageView fx:id="imgLevel4" fitHeight="147.0" fitWidth="179.0" onMouseClicked="#onMouseClicked" pickOnBounds="true" preserveRatio="true" translateX="209.0">
+         <image>
+            <Image url="@../resources/lvl5Photo.png" />
+         </image></ImageView>
       <ImageView fx:id="imgLevel5" fitHeight="111.0" fitWidth="129.0" onMouseClicked="#onMouseClicked" pickOnBounds="true" preserveRatio="true" translateX="395.0" translateY="-5.0">
          <image>
             <Image url="@../resources/lvl4Photo.png" />
