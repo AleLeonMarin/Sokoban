@@ -127,6 +127,8 @@ public class LevelsController extends Controller implements Initializable {
         }
     }
 
+
+
     private void updateLabelMovements() {
         labelMovements.setText(String.valueOf(movementCounter));
     }
@@ -156,6 +158,14 @@ public class LevelsController extends Controller implements Initializable {
     private void resumeLevel() {
         grpLevels.setOnKeyPressed(null);
 
+        System.out.println("Reanudando movimientos. Total de movimientos: " + playerMovements.size());
+
+        if (playerMovements.isEmpty()) {
+            System.out.println("No hay movimientos guardados.");
+            grpLevels.setOnKeyPressed(this::handleKeyPress);
+            return;
+        }
+
         Timeline timeline = new Timeline();
         timeline.setCycleCount(playerMovements.size());
 
@@ -182,10 +192,10 @@ public class LevelsController extends Controller implements Initializable {
 
         timeline.setOnFinished(event -> {
             movementCounter = 0;
-
-            grpLevels.setOnKeyPressed(this::handleKeyPress);
+            grpLevels.setOnKeyPressed(this::handleKeyPress); // Reanudar el control del teclado
         });
     }
+
 
 
     private void movePlayerRepetitions(int rowOffset, int colOffset) {
@@ -244,6 +254,7 @@ public class LevelsController extends Controller implements Initializable {
             e.printStackTrace();
         }
         updateGridPane();
+
     }
 
 
@@ -308,6 +319,7 @@ public class LevelsController extends Controller implements Initializable {
     @FXML
     private void handleSaveAndExit() {
         saveCurrentGame();
+        playerMovements.clear();
         FlowController.getInstance().goView("LevelsSelectorView");
     }
 
@@ -353,10 +365,16 @@ public class LevelsController extends Controller implements Initializable {
     }
 
     public void loadSavedGame(String fileName) {
+
         String filePath = "src/main/resources/cr/ac/una/datos/resources/Levels/saved_levels/" + fileName;
         loadBoardFromFile(filePath);
+
         updateGridPane();
+        updateLabelMovements();
     }
+
+
+
 
 
 
