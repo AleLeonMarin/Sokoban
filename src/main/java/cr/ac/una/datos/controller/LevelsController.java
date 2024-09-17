@@ -78,7 +78,6 @@ public class LevelsController extends Controller implements Initializable {
             loadBoardFromFile(LEVELS_PATH + level + ".txt");
             labelLvl.setText("Nivel " + level);
         } else if (levelObj instanceof String) {
-            // Si es un String (cuando es un nivel guardado)
             loadSavedGame((String) levelObj);
         }
         resizeGridPane(width, height);
@@ -106,6 +105,10 @@ public class LevelsController extends Controller implements Initializable {
                 movePlayer(0, 1, RIGHT);
                 break;
             case R:
+                if (playerMovements.isEmpty()) {
+                    System.out.println("No hay movimientos guardados.");
+                    return;
+                }
                 setUpLevel();
                 this.playerMovements.clear();
                 break;
