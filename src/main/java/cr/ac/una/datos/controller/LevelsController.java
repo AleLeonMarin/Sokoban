@@ -41,6 +41,7 @@ public class LevelsController extends Controller implements Initializable {
     @FXML
     private Button btnSaveAndExit;
 
+    private Integer level;
     private Integer width = 0;
     private Integer height = 0;
     private List<List<Character>> board;
@@ -71,15 +72,27 @@ public class LevelsController extends Controller implements Initializable {
         setUpLevel();
     }
 
+
     private void setUpLevel() {
         Object levelObj = AppContext.getInstance().get("level");
         if (levelObj instanceof Integer) {
-            int level = (Integer) levelObj;
-            loadBoardFromFile(LEVELS_PATH + level + ".txt");
-            labelLvl.setText("Nivel " + level);
+            this.level = (Integer) levelObj;
+            restartLevel();
         } else if (levelObj instanceof String) {
             loadSavedGame((String) levelObj);
+            setupGameAfterLoad();
+            level = detectarNivelGuardado(levelObj.toString());
+            playerMovements = loadPlayerMovements();
         }
+    }
+
+    private void restartLevel() {
+        loadBoardFromFile(LEVELS_PATH + level + ".txt");
+        labelLvl.setText("Nivel " + level);
+        setupGameAfterLoad();
+    }
+
+    private void setupGameAfterLoad() {
         resizeGridPane(width, height);
         loadGridPane();
         game = new Game(board);
@@ -88,6 +101,17 @@ public class LevelsController extends Controller implements Initializable {
         game.displayBoard();
     }
 
+    private static Integer detectarNivelGuardado(String texto) {
+        for (char c : texto.toCharArray()) {
+            if (Character.isDigit(c)) {
+                int numero = Character.getNumericValue(c);
+                if (numero >= 1 && numero <= 5) {
+                    return numero;
+                }
+            }
+        }
+        return null;
+    }
 
 
     private void handleKeyPress(KeyEvent event) {
@@ -105,11 +129,7 @@ public class LevelsController extends Controller implements Initializable {
                 movePlayer(0, 1, RIGHT);
                 break;
             case R:
-                if (playerMovements.isEmpty()) {
-                    System.out.println("No hay movimientos guardados.");
-                    return;
-                }
-                setUpLevel();
+                restartLevel();
                 this.playerMovements.clear();
                 break;
             default:
@@ -131,7 +151,6 @@ public class LevelsController extends Controller implements Initializable {
     }
 
 
-
     private void updateLabelMovements() {
         labelMovements.setText(String.valueOf(movementCounter));
     }
@@ -146,12 +165,12 @@ public class LevelsController extends Controller implements Initializable {
                     .getInstance().getController("RepeatLevelConfirmationView");
             boolean newFlag = (boolean) repeatLevelConfirmationController.getResultConfirmation();
             if (newFlag) {
-                setUpLevel();
+                restartLevel();
                 this.playerMovements.clear();
                 new Mensaje().showModal(AlertType.INFORMATION, "Nivel Completado", getStage(), "Has completado el nivel");
                 FlowController.getInstance().goView("LevelsSelectorView");
             } else {
-                setUpLevel();
+                restartLevel();
                 resumeLevel();
             }
         });
@@ -200,14 +219,15 @@ public class LevelsController extends Controller implements Initializable {
     }
 
 
-
     private void movePlayerRepetitions(int rowOffset, int colOffset) {
-        game.movePlayer(rowOffset, colOffset);
-        updateLabelMovements();
-        updateGridPane();
-        game.displayBoard();
-        if (game.isHasWon()) {
-            handleLevelCompletion();
+        if (game.isValidMove(rowOffset, colOffset)) {
+            game.movePlayer(rowOffset, colOffset);
+            updateLabelMovements();
+            updateGridPane();
+            game.displayBoard();
+            if (game.isHasWon()) {
+                handleLevelCompletion();
+            }
         }
     }
 
@@ -259,7 +279,6 @@ public class LevelsController extends Controller implements Initializable {
         updateGridPane();
 
     }
-
 
 
     public void loadGridPane() {
@@ -322,13 +341,9 @@ public class LevelsController extends Controller implements Initializable {
     @FXML
     private void handleSaveAndExit() {
         saveCurrentGame();
+        savePlayerMovements();
         playerMovements.clear();
         FlowController.getInstance().goView("LevelsSelectorView");
-    }
-
-    private void loadSavedGame(int level) {
-        String filePath = "src/main/resources/cr/ac/una/datos/resources/Levels/saved_levels/saved_level_" + level + ".txt";
-        loadBoardFromFile(filePath);
     }
 
     private void saveCurrentGame() {
@@ -368,22 +383,47 @@ public class LevelsController extends Controller implements Initializable {
     }
 
     public void loadSavedGame(String fileName) {
-
         String filePath = "src/main/resources/cr/ac/una/datos/resources/Levels/saved_levels/" + fileName;
         loadBoardFromFile(filePath);
-
         updateGridPane();
         updateLabelMovements();
     }
 
+    private void savePlayerMovements() {
+        String saveDirectoryPath = "src/main/resources/cr/ac/una/datos/resources/Levels/saved_movements";
+        File saveDirectory = new File(saveDirectoryPath);
+        if (!saveDirectory.exists()) {
+            saveDirectory.mkdirs();
+        }
 
+        String fileName = "saved_movements_level_" + level + ".txt";
+        File saveFile = new File(saveDirectory, fileName);
 
+        try (FileWriter fileWriter = new FileWriter(saveFile);
+             PrintWriter printWriter = new PrintWriter(fileWriter)) {
+            for (Character move : playerMovements) {
+                printWriter.print(move);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
+    private List<Character> loadPlayerMovements() {
+        String filePath = "src/main/resources/cr/ac/una/datos/resources/Levels/saved_movements/saved_movements_level_" + level + ".txt";
+        List<Character> movements = new ArrayList<>();
 
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+            int move;
+            while ((move = br.read()) != -1) {
+                movements.add((char) move);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-
-
-
+        return movements;
+    }
 
 
 }
